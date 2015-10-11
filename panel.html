@@ -1,0 +1,28 @@
+<html>
+<head>
+  <link rel="stylesheet" href="/assets/styles/app.css">
+  <link rel="stylesheet" href="/assets/fontawesome/css/font-awesome.min.css">
+  <script src="/scripts/lib/jquery-2.1.4.js"></script>
+  <script src="/scripts/lib/underscore.js"></script>
+  <script src="/scripts/lib/mustache.js"></script>
+  <script src="/scripts/panel.js"></script>
+</head>
+<body>
+  <header>
+    <a href="https://github.com/thebakeryio/meteor-ddp-monitor" target="_blank">Bugs, Features, PRs</a>
+  </header>
+  <ul class="network-traces"></ul>
+  <script id="message-template">
+    <li class="{{itemClass}}">
+      {{#isOutbound}}
+        <i tooltip="client says" class="fa fa-arrow-circle-o-up"></i> Client says: 
+      {{/isOutbound}} 
+      {{#isInbound}}
+        <i tooltip="server says" class="fa fa-arrow-circle-o-down"></i> Server says:
+      {{/isInbound}}
+     <span class="op-label">{{compactJSONString}} <i class="fa fa-plus-square-o toggle-request-body"></i></span>
+      <pre><code class="json">{{jsonString}}</code></pre>
+    </li>
+  </script>
+</body>
+</html>

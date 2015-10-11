@@ -1,0 +1,1 @@
+chrome.devtools.panels.create('Meteor DDP Monitor', 'assets/icons/icon16.png', 'panel.html');

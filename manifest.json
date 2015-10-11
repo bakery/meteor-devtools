@@ -1,0 +1,26 @@
+{
+  "name": "DDP Monitor",
+  "version": "0.1",
+
+  "description": "Monitors DDP traffic of your Meteor app",
+  "background" : {
+    "scripts": ["scripts/background.js"],
+    "persistent": false
+  },
+  
+  "icons": {
+    "16": "assets/icons/icon16.png",
+    "48": "assets/icons/icon48.png",
+    "128": "assets/icons/icon128.png"
+  },
+
+  "content_scripts": [{
+    "matches": ["<all_urls>"],
+    "js": ["scripts/content-script.js"],
+    "run_at": "document_end",
+    "all_frames": true
+  }],
+
+  "devtools_page": "devtools.html",
+  "manifest_version": 2
+}
