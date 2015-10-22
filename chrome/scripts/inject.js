@@ -1,6 +1,10 @@
 (function(){
   var setup = function(){
+
+    console.error('setting stuff up');
+
     var talkToExtension = function(eventType, data){
+      console.error('sending message',eventType,data);
       window.postMessage({
         eventType : eventType, 
         data: data, 
@@ -11,11 +15,17 @@
     var oldSend = WebSocket.prototype.send; 
     WebSocket.prototype.send = function(){
       oldSend.apply(this,arguments);
-      talkToExtension('sent', JSON.parse(arguments[0])); 
+      talkToExtension('trace', {
+        messageJSON : arguments[0],
+        isOutbound : true 
+      }); 
     }; 
 
     Meteor.connection._stream.on('message', function(){
-      talkToExtension('received', JSON.parse(arguments[0])); 
+      talkToExtension('trace', {
+        messageJSON : arguments[0],
+        isOutbound : false
+      }); 
     });
   };
 

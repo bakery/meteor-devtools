@@ -15,6 +15,8 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 
 chrome.runtime.onConnect.addListener(function(port) {
 
+  console.error('got connection from a panel');
+
   // Listen to messages sent from the DevTools page
   port.onMessage.addListener(function(request) {
     // Register initial connection

@@ -9,14 +9,14 @@
   },
   
   "icons": {
-    "16": "assets/icons/icon16.png",
-    "48": "assets/icons/icon48.png",
-    "128": "assets/icons/icon128.png"
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
   },
 
   "content_scripts": [{
     "matches": ["<all_urls>"],
-    "js": ["scripts/content-script.js"],
+    "js": ["scripts/content.js"],
     "run_at": "document_end",
     "all_frames": true
   }],
