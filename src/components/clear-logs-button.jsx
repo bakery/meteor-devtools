@@ -3,11 +3,11 @@ const React = require('react'),
 
 module.exports = React.createClass({
   onClick : function(){
-    Actions.clearLogs(); 
+    Actions.clearLogs();
   },
   render : function(){
     return (
-      <button onClick={this.onClick}>Clear</button>
+      <button onClick={this.onClick}><i className="fa fa-trash"></i> Clear</button>
     )
   }
 });

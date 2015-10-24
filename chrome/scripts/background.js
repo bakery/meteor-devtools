@@ -14,13 +14,15 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 });
 
 chrome.runtime.onConnect.addListener(function(port) {
-
-  console.error('got connection from a panel');
-
   // Listen to messages sent from the DevTools page
   port.onMessage.addListener(function(request) {
+    
+    if(request.name === 'debug'){
+      console.error('DEBUG: ' + request.message);
+    }
+
     // Register initial connection
-    if (request.name == 'init') {
+    if (request.name === 'init') {
       connections[request.tabId] = port;
 
       port.onDisconnect.addListener(function() {

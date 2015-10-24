@@ -14,17 +14,8 @@ const Store = Object.assign(EventEmitter.prototype, {
 
   addTrace : function(trace){
     this.data.push(_.extend({},trace,{
-      _id : _.uniqueId('trace'), 
-      expanded : false
+      _id : _.uniqueId('trace')
     }));
-    this.emit('change');
-  },
-
-  toggleTraceExtension : function(traceId){
-    var trace = _.find(this.data, function(t){
-      return t._id === traceId;
-    });
-    trace.expanded = !trace.expanded;
     this.emit('change');
   },
 
@@ -35,7 +26,6 @@ const Store = Object.assign(EventEmitter.prototype, {
 });
 
 Dispatcher.register(function(action){
-  console.error('incoming action', action);
   switch(action.type){
     case Constants.NEW_TRACE:
       Store.addTrace(action.data);

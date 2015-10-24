@@ -1,6 +1,6 @@
 {
   "name": "DDP Monitor",
-  "version": "0.1.1",
+  "version": "0.2.0",
 
   "description": "Monitors DDP traffic of your Meteor app",
   "background" : {
@@ -22,5 +22,6 @@
   }],
 
   "devtools_page": "devtools.html",
+  "options_page": "panel.html",
   "manifest_version": 2
 }

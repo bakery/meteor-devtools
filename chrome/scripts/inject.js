@@ -1,10 +1,6 @@
 (function(){
   var setup = function(){
-
-    console.error('setting stuff up');
-
     var talkToExtension = function(eventType, data){
-      console.error('sending message',eventType,data);
       window.postMessage({
         eventType : eventType, 
         data: data, 
@@ -30,9 +26,10 @@
   };
 
   var readyStateCheckInterval = setInterval(function() {
-    if (document.readyState === "complete") {
+    var isMeteorDefined = typeof Meteor !== 'undefined';
+    if (document.readyState === 'complete' || isMeteorDefined) {
       clearInterval(readyStateCheckInterval);
-      if(typeof Meteor !== 'undefined'){
+      if(isMeteorDefined){
         setup();
       }
     } 

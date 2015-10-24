@@ -3,30 +3,45 @@ const React = require('react'),
       JSONTree = require('react-json-tree');
 
 module.exports = React.createClass({
+
+  propTypes: {
+    data: React.PropTypes.shape({
+      _id: React.PropTypes.string.isRequired,
+      isOutbound : React.PropTypes.bool.isRequired,
+      jsonString : React.PropTypes.string.isRequired,
+      compactJSONString : React.PropTypes.string.isRequired
+    }).isRequired,
+  },
+
+  getInitialState: function() {
+    return { isExpanded : false };
+  },
+
   onExpandToggle : function(){
-    Actions.toggleTraceExtension(this.props.data._id); 
+    this.setState({isExpanded : !this.state.isExpanded});
   },
 
   render : function(){
+    const getStyle = (type, expanded) => ({ marginTop: 4 })
+
     var messageDirectionIcon = this.props.data.isOutbound ?
-      <i tooltip="client says" className="fa fa-arrow-circle-o-up"></i> :
-      <i tooltip="server says" className="fa fa-arrow-circle-o-down"></i>;
+      <i className="fa fa-arrow-circle-o-up" tooltip="client says"></i> :
+      <i className="fa fa-arrow-circle-o-down" tooltip="server says"></i>;
     var messageDirectionLabel = this.props.data.isOutbound ? 'Client says:' :
       'Server says:';
     var itemClassName = this.props.data.isOutbound ? 'outbound' : 'inbound';
-    var expandClass = this.props.data.expanded ? 'expand' : null;
-    var jsonTree = this.props.data.expanded ? 
-      <JSONTree data={ JSON.parse(this.props.data.jsonString) } /> : null;
+    var jsonTree = this.state.isExpanded ? 
+      <JSONTree data={ JSON.parse(this.props.data.jsonString) } getArrowStyle={getStyle} /> : null;
+    var expandToggleClassName = this.state.isExpanded ?
+      'fa fa-minus-square-o' : 'fa fa-plus-square-o';
 
     return (
-      <li className="{itemClassName}">
+      <li className="{itemClassName}" key={this.props.data._id}>
         {messageDirectionIcon} {messageDirectionLabel} 
-        <span className="op-label">{this.props.data.compactJSONString}
-          <i className="fa fa-plus-square-o" onClick={this.onExpandToggle}></i>
+        <span className="op-label" onClick={this.onExpandToggle}>{this.props.data.compactJSONString}
+          <i className={expandToggleClassName}></i>
         </span>
-        <pre className={expandClass}>
-          {jsonTree}
-        </pre>
+        {jsonTree}
       </li>
     )
   }

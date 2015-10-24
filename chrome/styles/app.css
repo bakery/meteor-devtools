@@ -7,38 +7,34 @@ html, body {
 header {
   position:fixed;
   left:0; right:0;
-  /*height:40px;*/
   background-color:#fff;
   border: solid 1px #ccc;
   padding: 0.5em;
+  z-index: 10000;
+}
+
+header a {
+  float:right;
+  text-decoration: none;
 }
 
 ul.network-traces {
   margin:0;
-  padding:25px 0 0 0;
+  padding:40px 0 0 0;
 }
 
-ul.network-traces li {
+ul.network-traces > li {
   list-style-type:none;
   border-bottom:solid 1px #ccc;
   padding: 0.5em;
 } 
 
-ul.network-traces li.inbound {
+ul.network-traces > li.inbound {
   background-color: #F8F8F8;
 }
 
-ul.network-traces li .op-label {
+ul.network-traces > li .op-label {
   /* background-color:#ddd; */
   padding:0.2em;
   border:solid 1px #ccc;
-}
-
-ul.network-traces li pre {
-  display:none;
-  margin-left:80px
-}
-
-ul.network-traces li pre.expand {
-  display:block;
 }

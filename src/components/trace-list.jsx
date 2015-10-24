@@ -7,6 +7,17 @@ module.exports = React.createClass({
     Store.on('change', this.onChange);
   },
 
+  componentDidUpdate: function(){
+    var body = document.body, html = document.documentElement;
+    var height = Math.max(body.scrollHeight, body.offsetHeight, 
+      html.clientHeight, html.scrollHeight, html.offsetHeight);
+    var ratio = (window.scrollY + window.innerHeight)/height;
+
+    if(ratio > 0.8) {
+      window.scrollTo(0,document.body.scrollHeight);
+    }
+  },
+
   getInitialState: function(){
     return {
       items : []
@@ -14,7 +25,6 @@ module.exports = React.createClass({
   },
 
   onChange: function () {
-    console.error('store store state', Store.getState());
     this.setState({
       items : Store.getState()
     });
@@ -26,9 +36,7 @@ module.exports = React.createClass({
     var items = this.state.items.map(function(item){
       return <TraceItem data={item}/>;
     });
-
-    console.error('props are', this.state);
-
+    
     return (
       <ul className="network-traces">
         {items}

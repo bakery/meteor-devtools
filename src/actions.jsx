@@ -27,6 +27,7 @@ module.exports = {
       d = _.isArray(d) ? d : [d];
 
       _.each(d, function(m){
+        var m = _.isString(m) ? JSON.parse(m) : m;
         Dispatcher.dispatch({
           type : Constants.NEW_TRACE,
           data : {
@@ -39,17 +40,17 @@ module.exports = {
       });
     }
   },
-
-  toggleTraceExtension : function(traceId){
-    Dispatcher.dispatch({
-      type : Constants.TOGGLE_TRACE_EXTEND,
-      data : traceId
-    });
-  },
-
+  
   clearLogs : function(){
     Dispatcher.dispatch({
       type : Constants.CLEAR_LOGS
+    });
+  },
+
+  debug : function(message){
+    Dispatcher.dispatch({
+      type : Constants.DEBUG,
+      data : message
     });
   } 
 };

@@ -1,18 +1,15 @@
-//document.body.style['background-color']='red';
-
 const React = require('react'),
       ReactDOM = require('react-dom'),
       AppContainer = require('./components/app-container'),
-      Bridge = require('./bridge');
+      Bridge = require('./bridge'),
+      Actions = require('./actions');
 
-
-var theApp;
+var node = document.querySelector('.app-container');
 
 Bridge.setup(function(){
-  theApp = ReactDOM.render(
-    <AppContainer />,
-    document.querySelector('.app-container')
-  );
+  ReactDOM.unmountComponentAtNode(node);
+  node.innerHTML = '';
+  ReactDOM.render(<AppContainer />, node);
 }, function(message){
-  theApp && theApp.showErrorMessage(message);
+  console.error(message);
 });
