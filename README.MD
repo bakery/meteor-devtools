@@ -1,4 +1,4 @@
-# Meteor DDP Monitor Chrome Extension ![ES-2015](https://img.shields.io/badge/ES-2015-brightgreen.svg)
+# Meteor DDP Monitor Chrome Extension [![Build Status](https://travis-ci.org/thebakeryio/meteor-ddp-monitor.svg)](https://travis-ci.org/thebakeryio/meteor-ddp-monitor) ![ES-2015](https://img.shields.io/badge/ES-2015-brightgreen.svg)
 
 
 Adds DDP traffic monitor to your Chrome Dev Tools
