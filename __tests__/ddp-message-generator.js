@@ -178,4 +178,11 @@ describe('DDPMessageGenerator.generate', () => {
     const DDPMessageGenerator = require('../src/ddp-generator');    
     expect(() => DDPMessageGenerator.generate({ type : 'not-a-valid-message' })).toThrow();
   });
+
+  it('generates a random message when a spec is not given', () => {
+    const DDPMessageGenerator = require('../src/ddp-generator');
+    const supportedMessages = _.keys(DDPMessageGenerator.DDPMessages);
+    const msg = JSON.parse(DDPMessageGenerator.generate());
+    expect(_.contains(supportedMessages, msg.msg)).toBeTruthy();
+  });
 });
