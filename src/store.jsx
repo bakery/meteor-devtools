@@ -1,25 +1,25 @@
-const EventEmitter = require('events').EventEmitter,
-      Dispatcher = require('./dispatcher'),
-      Constants = require('./constants'),
-      _ = require('underscore');
+import {EventEmitter} from 'events';
+import Dispatcher from './dispatcher';
+import Constants from './constants';
+import _ from 'underscore';
 
-var data = [];
+let data = [];
 
 const Store = Object.assign(EventEmitter.prototype, {
   data: [],
 
-  getState : function(){
+  getState(){
     return this.data;
   },
 
-  addTrace : function(trace){
+  addTrace(trace){
     this.data.push(_.extend({},trace,{
       _id : _.uniqueId('trace')
     }));
     this.emit('change');
   },
 
-  clear : function(){
+  clear(){
     this.data = [];
     this.emit('change');
   }
@@ -39,4 +39,4 @@ Dispatcher.register(function(action){
   }
 });
 
-module.exports = Store;
+export default Store;

@@ -1,11 +1,11 @@
-const React = require('react'),
-      Store = require('../store'),
-      Actions = require('../actions'),
-      TraceList = require('./trace-list'),
-      ClearLogsButton = require('./clear-logs-button');
+import React from 'react';
+import Store from '../store';
+import Actions from '../actions';
+import TraceList from './trace-list';
+import ClearLogsButton from './clear-logs-button';
 
-module.exports = React.createClass({
-  render : function(){
+export default React.createClass({
+  render(){
     return (
       <div>
         <header>

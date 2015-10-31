@@ -1,6 +1,6 @@
 {
   "name": "ddpmonitor",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Monitor Meteor DDP Traffic in Chrome",
   "repository": {
     "type": "git",
@@ -33,6 +33,7 @@
     "webpack-dev-server": "^1.12.0"
   },
   "dependencies": {
+    "classnames": "^2.2.0",
     "react": "^0.14.0",
     "react-dom": "^0.14.0",
     "react-json-tree": "^0.2.0",
