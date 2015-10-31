@@ -1,6 +1,7 @@
 import Actions from './actions';
 import Dispatcher from './dispatcher';
 import Constants from './constants';
+import DDPMessageGenerator from './ddp-generator';
 
 let backgroundPageConnection;
 let debug = (message) => {
@@ -64,7 +65,7 @@ export default {
       // inside standalone web app
       setInterval(function(){
         Actions.addTrace({
-          messageJSON: '{ "msg": "ping"}',
+          messageJSON: DDPMessageGenerator.generate(),
           isOutbound: true
         });
       },1000);
