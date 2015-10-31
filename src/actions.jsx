@@ -1,8 +1,8 @@
-const Dispatcher = require('./dispatcher'),
-      Constants = require('./constants'),
-      _ = require('underscore');
+import Dispatcher from './dispatcher';
+import Constants from './constants';
+import  _ from 'underscore';
 
-var compactJSONString = function(d, maxLength){
+let compactJSONString = (d, maxLength) => {
   var str  = JSON.stringify(d);
   if(str.length <= maxLength){
     return str;
@@ -13,21 +13,21 @@ var compactJSONString = function(d, maxLength){
   }
 };
 
-var unescapeBackSlashes = function(str){
+let unescapeBackSlashes = (str) => {
   return str.replace(/\\"/g, '"');
 };
 
 module.exports = {
-  addTrace : function(data){
-    var isValid = data && data.messageJSON && 
+  addTrace(data){
+    let isValid = data && data.messageJSON && 
       typeof data.isOutbound !== 'undefined';
 
     if(isValid){
-      var d = JSON.parse(data.messageJSON);  
+      let d = JSON.parse(data.messageJSON);  
       d = _.isArray(d) ? d : [d];
 
       _.each(d, function(m){
-        var m = _.isString(m) ? JSON.parse(m) : m;
+        m = _.isString(m) ? JSON.parse(m) : m;
         Dispatcher.dispatch({
           type : Constants.NEW_TRACE,
           data : {
@@ -41,13 +41,13 @@ module.exports = {
     }
   },
   
-  clearLogs : function(){
+  clearLogs(){
     Dispatcher.dispatch({
       type : Constants.CLEAR_LOGS
     });
   },
 
-  debug : function(message){
+  debug(message){
     Dispatcher.dispatch({
       type : Constants.DEBUG,
       data : message

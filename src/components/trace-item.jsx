@@ -1,8 +1,9 @@
-const React = require('react'),
-      Actions = require('../actions'),
-      JSONTree = require('react-json-tree');
+import React from 'react';
+import Actions from '../actions';
+import JSONTree from 'react-json-tree';
+import classNames from 'classnames';
 
-module.exports = React.createClass({
+export default React.createClass({
 
   propTypes: {
     data: React.PropTypes.shape({
@@ -13,33 +14,41 @@ module.exports = React.createClass({
     }).isRequired,
   },
 
-  getInitialState: function() {
+  getInitialState () {
     return { isExpanded : false };
   },
 
-  onExpandToggle : function(){
+  onExpandToggle () {
     this.setState({isExpanded : !this.state.isExpanded});
   },
 
-  render : function(){
+  render () {
+    
     const getStyle = (type, expanded) => ({ marginTop: 4 })
 
-    var messageDirectionIcon = this.props.data.isOutbound ?
-      <i className="fa fa-arrow-circle-o-up" tooltip="client says"></i> :
-      <i className="fa fa-arrow-circle-o-down" tooltip="server says"></i>;
-    var messageDirectionLabel = this.props.data.isOutbound ? 'Client says:' :
-      'Server says:';
-    var itemClassName = this.props.data.isOutbound ? 'outbound' : 'inbound';
-    var jsonTree = this.state.isExpanded ? 
+    const itemClass = classNames({
+      outbound : this.props.data.isOutbound,
+      inbound : !this.props.data.isOutbound
+    });
+    const directionIconClass = classNames('fa', {
+      'fa-arrow-circle-o-up' : this.props.data.isOutbound, 
+      'fa-arrow-circle-o-down' : !this.props.data.isOutbound
+    });
+    const toggleIconClass = classNames('fa', {
+      'fa-minus-square-o' : this.state.isExpanded,
+      'fa-plus-square-o' : !this.state.isExpanded
+    });  
+    const tooltip = this.props.data.isOutbound ?
+      'Client says:' : 'Server says:';
+
+    const jsonTree = this.state.isExpanded ? 
       <JSONTree data={ JSON.parse(this.props.data.jsonString) } getArrowStyle={getStyle} /> : null;
-    var expandToggleClassName = this.state.isExpanded ?
-      'fa fa-minus-square-o' : 'fa fa-plus-square-o';
 
     return (
-      <li className="{itemClassName}" key={this.props.data._id}>
-        {messageDirectionIcon} {messageDirectionLabel} 
+      <li className={itemClass} key={this.props.data._id}>
+        <i className={directionIconClass} tooltip="${tooltip}"></i> {tooltip} 
         <span className="op-label" onClick={this.onExpandToggle}>{this.props.data.compactJSONString}
-          <i className={expandToggleClassName}></i>
+          <i className={toggleIconClass}></i>
         </span>
         {jsonTree}
       </li>

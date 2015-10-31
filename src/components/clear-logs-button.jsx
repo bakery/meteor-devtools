@@ -1,11 +1,11 @@
-const React = require('react'),
-      Actions = require('../actions');
+import React from 'react';
+import Actions from '../actions';
 
-module.exports = React.createClass({
-  onClick : function(){
+export default React.createClass({
+  onClick (){
     Actions.clearLogs();
   },
-  render : function(){
+  render (){
     return (
       <button onClick={this.onClick}><i className="fa fa-trash"></i> Clear</button>
     )

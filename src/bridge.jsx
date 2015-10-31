@@ -1,9 +1,9 @@
-const Actions = require('./actions'),
-      Dispatcher = require('./dispatcher'),
-      Constants = require('./constants');
+import Actions from './actions';
+import Dispatcher from './dispatcher';
+import Constants from './constants';
 
-var backgroundPageConnection;
-var debug = function(message){
+let backgroundPageConnection;
+let debug = (message) => {
   backgroundPageConnection && backgroundPageConnection.postMessage({
     name: 'debug',
     message: message
@@ -18,8 +18,8 @@ Dispatcher.register(function(action){
   }
 });
 
-module.exports = {
-  setup : function(callback, onError){
+export default {
+  setup(callback, onError){
 
     var onGotMessage = function(message){
       if(message && message.eventType === 'trace'){
@@ -28,7 +28,7 @@ module.exports = {
     };
 
     if(chrome && chrome.devtools){
-      var chromeSetup = function(){
+      let chromeSetup = function(){
         // Create a connection to the background page
         backgroundPageConnection = chrome.runtime.connect({
           name: 'panel'
@@ -45,8 +45,8 @@ module.exports = {
         });
       };
 
-      var pageSetup = function(){
-        var xhr = new XMLHttpRequest();
+      let pageSetup = () => {
+        let xhr = new XMLHttpRequest();
         xhr.open('GET', chrome.extension.getURL('/scripts/inject.js'), false);
         xhr.send();
 

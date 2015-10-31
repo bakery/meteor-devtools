@@ -1,15 +1,13 @@
-const React = require('react'),
-      ReactDOM = require('react-dom'),
-      AppContainer = require('./components/app-container'),
-      Bridge = require('./bridge'),
-      Actions = require('./actions');
+import React from 'react';
+import ReactDOM from 'react-dom';
+import AppContainer from './components/app-container';
+import Bridge from './bridge';
+import Actions from './actions';
 
-var node = document.querySelector('.app-container');
+let node = document.querySelector('.app-container');
 
-Bridge.setup(function(){
+Bridge.setup(() => {
   ReactDOM.unmountComponentAtNode(node);
   node.innerHTML = '';
   ReactDOM.render(<AppContainer />, node);
-}, function(message){
-  console.error(message);
-});
+}, (message) => console.error(message));
