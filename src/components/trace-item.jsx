@@ -2,15 +2,14 @@ import React from 'react';
 import Actions from '../actions';
 import JSONTree from 'react-json-tree';
 import classNames from 'classnames';
+import Helpers from '../helpers';
 
 export default React.createClass({
 
   propTypes: {
     data: React.PropTypes.shape({
-      _id: React.PropTypes.string.isRequired,
       isOutbound : React.PropTypes.bool.isRequired,
-      jsonString : React.PropTypes.string.isRequired,
-      compactJSONString : React.PropTypes.string.isRequired
+      jsonString : React.PropTypes.string.isRequired
     }).isRequired,
   },
 
@@ -41,13 +40,16 @@ export default React.createClass({
     const tooltip = this.props.data.isOutbound ?
       'Client says:' : 'Server says:';
 
+    const compactJSONString = Helpers.unescapeBackSlashes(
+        Helpers.compactJSONString(this.props.data.jsonString, 50))
+
     const jsonTree = this.state.isExpanded ? 
       <JSONTree data={ JSON.parse(this.props.data.jsonString) } getArrowStyle={getStyle} /> : null;
 
     return (
-      <li className={itemClass} key={this.props.data._id}>
+      <li className={itemClass}>
         <i className={directionIconClass} tooltip="${tooltip}"></i> {tooltip} 
-        <span className="op-label" onClick={this.onExpandToggle}>{this.props.data.compactJSONString}
+        <span className="op-label" onClick={this.onExpandToggle}>{compactJSONString}
           <i className={toggleIconClass}></i>
         </span>
         {jsonTree}
