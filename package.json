@@ -12,7 +12,8 @@
   ],
   "scripts": {
     "start": "node server.js",
-    "test": "eslint . && BABEL_JEST_STAGE=0 jest"
+    "test": "eslint . && BABEL_JEST_STAGE=0 jest",
+    "chrome": "npm run test && webpack"
   },
   "jest": {
     "scriptPreprocessor": "./node_modules/babel-jest",

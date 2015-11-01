@@ -14,7 +14,12 @@ const Store = Object.assign(EventEmitter.prototype, {
   },
 
   addTrace(item){
-    this.data.push(item);
+    this.data.push(_.extend({}, {
+      message : JSON.parse(item.jsonString),
+      isOutbound : item.isOutbound,
+      _id : _.uniqueId('trace'),
+      _timestamp : _.now()
+    }));
     this.emit('change');
   },
 

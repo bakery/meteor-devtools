@@ -9,7 +9,10 @@ describe('Store', function(){
     const DDPGenerator = require('../src/ddp-generator');
     const message = DDPGenerator.generate();
 
-    Store.addTrace(JSON.stringify(message), true);
+    Store.addTrace({
+      jsonString : JSON.stringify(message),
+      isOutbound : true
+    });
     Store.getState();
 
     expect(TraceProcessor.processTraces).toBeCalled();

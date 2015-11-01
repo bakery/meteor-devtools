@@ -9,7 +9,7 @@ export default React.createClass({
   propTypes: {
     data: React.PropTypes.shape({
       isOutbound : React.PropTypes.bool.isRequired,
-      jsonString : React.PropTypes.string.isRequired
+      message : React.PropTypes.object.isRequired
     }).isRequired,
   },
 
@@ -41,10 +41,10 @@ export default React.createClass({
       'Client says:' : 'Server says:';
 
     const compactJSONString = Helpers.unescapeBackSlashes(
-        Helpers.compactJSONString(this.props.data.jsonString, 50))
+        Helpers.compactJSONString(JSON.stringify(this.props.data.message), 50))
 
     const jsonTree = this.state.isExpanded ? 
-      <JSONTree data={ JSON.parse(this.props.data.jsonString) } getArrowStyle={getStyle} /> : null;
+      <JSONTree data={ this.props.data.message } getArrowStyle={getStyle} /> : null;
 
     return (
       <li className={itemClass}>
