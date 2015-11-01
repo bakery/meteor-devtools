@@ -114,20 +114,18 @@ export default {
     // message spec
     // {
     //  type: <message type defined in DDPMessages>,
-    //  numberOfMessages: <number of messages to generate, defaults to>
+    //  numberOfMessages: <number of messages to generate, defaults to 1>
     // }
     
     const supportedMessages = _.keys(this.DDPMessages); 
     const type = (spec && spec.type) ||
-      supportedMessages[_.random(0,supportedMessages.length-1)]
+      supportedMessages[_.random(0,supportedMessages.length-1)];
 
     return this.runGenerator(type, spec && spec.numberOfMessages);
   },
 
   runGenerator : function(type, numberOfMessages){
     const data = this.DDPMessages[type].call(this, numberOfMessages);
-    return JSON.stringify(
-      data.length === 1 ? data[0] : data
-    );
+    return data.length === 1 ? data[0] : data;
   }
 };

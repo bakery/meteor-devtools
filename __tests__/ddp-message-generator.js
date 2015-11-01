@@ -4,17 +4,15 @@ jest.dontMock('underscore');
 const _ = require('underscore');
 
 const checkMessageFormat = (msg, predicate, numberOfMessages) => {
-  const parsedMessage = JSON.parse(msg);
-
   if(numberOfMessages){
-    expect(_.isArray(parsedMessage)).toBeTruthy();
-    expect(parsedMessage.length).toEqual(numberOfMessages);
-    _.each(parsedMessage, (m) => {
+    expect(_.isArray(msg)).toBeTruthy();
+    expect(msg.length).toEqual(numberOfMessages);
+    _.each(msg, (m) => {
       expect(predicate.call(this,m)).toBeTruthy();
     });
   } else {
-    expect(parsedMessage).toBeDefined();
-    expect(predicate.call(this,parsedMessage)).toBeTruthy(
+    expect(msg).toBeDefined();
+    expect(predicate.call(this,msg)).toBeTruthy(
       `got ${msg}`
     );
   }
@@ -87,7 +85,7 @@ describe('DDPMessageGenerator.generate', () => {
     const DDPMessageGenerator = require('../src/ddp-generator');
     const msg = DDPMessageGenerator.generate();
     expect(msg).toBeDefined();
-    expect(JSON.parse(msg)).toBeDefined();
+    expect(_.isObject(msg)).toBeTruthy();
   });
 
   it('can generate ping message', () => {
@@ -95,7 +93,7 @@ describe('DDPMessageGenerator.generate', () => {
     const msg = DDPMessageGenerator.generate({
       type : 'ping'
     });
-    expect(msg).toMatch(/{"msg":"ping"}/ig);
+    expect(JSON.stringify(msg)).toMatch(/{"msg":"ping"}/ig);
   });
 
   it('can generate pong message', () => {
@@ -103,7 +101,7 @@ describe('DDPMessageGenerator.generate', () => {
     const msg = DDPMessageGenerator.generate({
       type : 'pong'
     });
-    expect(msg).toMatch(/{"msg":"pong"}/ig);
+    expect(JSON.stringify(msg)).toMatch(/{"msg":"pong"}/ig);
   });
 
   it('can generate changed message', () => {
@@ -121,7 +119,7 @@ describe('DDPMessageGenerator.generate', () => {
     
     checkMessageFormat(msgs, messageChecks.changed, numberOfMessages);
     expect(
-      _.uniq(_.pluck(JSON.parse(msgs),'collection')).length === 1
+      _.uniq(_.pluck(msgs,'collection')).length === 1
     ).toBeTruthy('collection name is not consistent');
   });
 
@@ -140,7 +138,7 @@ describe('DDPMessageGenerator.generate', () => {
     
     checkMessageFormat(msgs, messageChecks.added, numberOfMessages);
     expect(
-      _.uniq(_.pluck(JSON.parse(msgs),'collection')).length === 1
+      _.uniq(_.pluck(msgs,'collection')).length === 1
     ).toBeTruthy('collection name is not consistent');
   });
 
@@ -216,7 +214,7 @@ describe('DDPMessageGenerator.generate', () => {
   it('generates a random message when a spec is not given', () => {
     const DDPMessageGenerator = require('../src/ddp-generator');
     const supportedMessages = _.keys(DDPMessageGenerator.DDPMessages);
-    const msg = JSON.parse(DDPMessageGenerator.generate());
+    const msg = DDPMessageGenerator.generate();
     expect(_.contains(supportedMessages, msg.msg)).toBeTruthy();
   });
 });
