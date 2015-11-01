@@ -3,6 +3,67 @@ jest.dontMock('underscore');
 
 const _ = require('underscore');
 
+const checkMessageFormat = (msg, predicate, numberOfMessages) => {
+  const parsedMessage = JSON.parse(msg);
+
+  if(numberOfMessages){
+    expect(_.isArray(parsedMessage)).toBeTruthy();
+    expect(parsedMessage.length).toEqual(numberOfMessages);
+    _.each(parsedMessage, (m) => {
+      expect(predicate.call(this,m)).toBeTruthy();
+    });
+  } else {
+    expect(parsedMessage).toBeDefined();
+    expect(predicate.call(this,parsedMessage)).toBeTruthy(
+      `got ${msg}`
+    );
+  }
+};
+
+const messageChecks = {
+  changed(m){
+    return m.msg === 'changed' &&
+      m.collection && _.isString(m.collection) &&
+      _.isString(m.id) && _.isObject(m.fields);
+  },
+  added(m){
+    return m.msg === 'added' &&
+      _.isString(m.collection) &&
+      _.isString(m.id) && _.isObject(m.fields);
+  },
+  removed(m){
+    return m.msg === 'removed' &&
+      _.isString(m.collection) && _.isString(m.id);
+  },
+  sub(m){
+    return m.msg === 'sub' &&
+      _.isString(m.id) && _.isString(m.name) && 
+      _.isArray(m.params);
+  },
+  ready(m){
+    return m.msg === 'ready' && _.isArray(m.subs);
+  },
+  method(m){
+    return m.msg === 'method' && _.isString(m.method) &&
+      _.isArray(m.params) && _.isString(m.id);
+  },
+  updated(m){
+    return m.msg === 'updated' && _.isArray(m.methods);
+  },
+  connect(m){
+    return m.msg === 'connect' && _.isString(m.version) &&
+      _.isArray(m.support);
+  },
+  result(m){
+    return m.msg === 'result' && _.isString(m.id) &&
+      _.isObject(m.result);
+  },
+  resultWithError(m){
+    return m.msg === 'result' && _.isString(m.id) &&
+      _.isObject(m.error);
+  }
+};
+
 describe('DDPMessageGenerator', () => {
   it('is defined', () => {
     const DDPMessageGenerator = require('../src/ddp-generator');
@@ -20,15 +81,6 @@ describe('DDPMessageGenerator', () => {
     expect(_.isObject(DDPMessageGenerator.DDPMessages)).toBeTruthy();
   });
 });
-
-
-const checkMessageFormat = (msg, predicate) => {
-  const parsedMessage = JSON.parse(msg);
-  expect(parsedMessage).toBeDefined();
-  expect(predicate.call(this,parsedMessage)).toBeTruthy(
-    `got ${msg}`
-  );
-};
 
 describe('DDPMessageGenerator.generate', () => {
   it('returns a random json message string', () => {
@@ -59,12 +111,18 @@ describe('DDPMessageGenerator.generate', () => {
     const msg = DDPMessageGenerator.generate({
       type : 'changed'
     });
-    
-    checkMessageFormat(msg, (m) => {
-      return m.msg === 'changed' &&
-        m.collection && _.isString(m.collection) &&
-        _.isString(m.id) && _.isObject(m.fields)
+    checkMessageFormat(msg, messageChecks.changed);
+
+    const numberOfMessages = _.random(2,5);
+    const msgs = DDPMessageGenerator.generate({
+      type : 'changed',
+      numberOfMessages : numberOfMessages
     });
+    
+    checkMessageFormat(msgs, messageChecks.changed, numberOfMessages);
+    expect(
+      _.uniq(_.pluck(JSON.parse(msgs),'collection')).length === 1
+    ).toBeTruthy('collection name is not consistent');
   });
 
   it('can generate added message', () => {
@@ -72,12 +130,18 @@ describe('DDPMessageGenerator.generate', () => {
     const msg = DDPMessageGenerator.generate({
       type : 'added'
     });
-    
-    checkMessageFormat(msg, (m) => {
-      return m.msg === 'added' &&
-        _.isString(m.collection) &&
-        _.isString(m.id) && _.isObject(m.fields)
+    checkMessageFormat(msg, messageChecks.added);
+
+    const numberOfMessages = _.random(2,5);
+    const msgs = DDPMessageGenerator.generate({
+      type : 'added',
+      numberOfMessages : numberOfMessages
     });
+    
+    checkMessageFormat(msgs, messageChecks.added, numberOfMessages);
+    expect(
+      _.uniq(_.pluck(JSON.parse(msgs),'collection')).length === 1
+    ).toBeTruthy('collection name is not consistent');
   });
 
   it('can generate removed message', () => {
@@ -85,11 +149,7 @@ describe('DDPMessageGenerator.generate', () => {
     const msg = DDPMessageGenerator.generate({
       type : 'removed'
     });
-
-    checkMessageFormat(msg, (m) => {
-      return m.msg === 'removed' &&
-        _.isString(m.collection) && _.isString(m.id) 
-    });
+    checkMessageFormat(msg, messageChecks.removed);
   });
 
   it('can generate sub message', () => {
@@ -97,11 +157,7 @@ describe('DDPMessageGenerator.generate', () => {
     const msg = DDPMessageGenerator.generate({
       type : 'sub'
     });
-
-    checkMessageFormat(msg, (m) => {
-      return m.msg === 'sub' &&
-        _.isString(m.id) && _.isString(m.name) && _.isArray(m.params) 
-    });
+    checkMessageFormat(msg, messageChecks.sub);
   });
 
   it('can generate ready message', () => {
@@ -109,10 +165,7 @@ describe('DDPMessageGenerator.generate', () => {
     const msg = DDPMessageGenerator.generate({
       type : 'ready'
     });
-
-    checkMessageFormat(msg, (m) => {
-      return m.msg === 'ready' && _.isArray(m.subs) 
-    });
+    checkMessageFormat(msg, messageChecks.ready);
   });
 
   it('can generate method message', () => {
@@ -120,11 +173,7 @@ describe('DDPMessageGenerator.generate', () => {
     const msg = DDPMessageGenerator.generate({
       type : 'method'
     });
-
-    checkMessageFormat(msg, (m) => {
-      return m.msg === 'method' && _.isString(m.method) &&
-        _.isArray(m.params) && _.isString(m.id);
-    });
+    checkMessageFormat(msg, messageChecks.method);
   });
 
   it('can generate updated message', () => {
@@ -132,10 +181,7 @@ describe('DDPMessageGenerator.generate', () => {
     const msg = DDPMessageGenerator.generate({
       type : 'updated'
     });
-
-    checkMessageFormat(msg, (m) => {
-      return m.msg === 'updated' && _.isArray(m.methods);
-    });
+    checkMessageFormat(msg, messageChecks.updated);
   });
 
   it('can generate connect message', () => {
@@ -143,11 +189,7 @@ describe('DDPMessageGenerator.generate', () => {
     const msg = DDPMessageGenerator.generate({
       type : 'connect'
     });
-
-    checkMessageFormat(msg, (m) => {
-      return m.msg === 'connect' && _.isString(m.version) &&
-        _.isArray(m.support);
-    });
+    checkMessageFormat(msg, messageChecks.connect);
   });
 
   it('can generate result message', () => {
@@ -155,11 +197,7 @@ describe('DDPMessageGenerator.generate', () => {
     const msg = DDPMessageGenerator.generate({
       type : 'result'
     });
-
-    checkMessageFormat(msg, (m) => {
-      return m.msg === 'result' && _.isString(m.id) &&
-        _.isObject(m.result);
-    });
+    checkMessageFormat(msg, messageChecks.result);
   });
 
   it('can generate resultWithError message', () => {
@@ -167,11 +205,7 @@ describe('DDPMessageGenerator.generate', () => {
     const msg = DDPMessageGenerator.generate({
       type : 'resultWithError'
     });
-
-    checkMessageFormat(msg, (m) => {
-      return m.msg === 'result' && _.isString(m.id) &&
-        _.isObject(m.error);
-    });
+    checkMessageFormat(msg, messageChecks.resultWithError);
   });
 
   it('cannot generate unsupported message and complains about it', () => {

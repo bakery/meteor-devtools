@@ -15,102 +15,119 @@ const randomArray = () => {
   });
 };
 
+const generateMessages = (g, numberOfMessages) => {
+  return _.map(_.range(numberOfMessages || 1), function(){
+    return g.call(this);
+  });
+};
+
 export default {
   
   DDPMessages : {
     ping : () => {
-      return '{"msg":"ping"}';
+      return {msg:'ping'};
     },
     pong : () => {
-      return '{"msg":"pong"}';
+      return {msg:'pong'};
     },
-    changed : () => {
-      return JSON.stringify({
-        msg : 'changed',
-        collection : _.uniqueId('collection'),
-        id : _.uniqueId('id'),
-        fields : randomObject()
-      });
+    changed : (numberOfMessages) => {
+      const collectionName = _.uniqueId('collection');
+      return generateMessages(() => {
+        return {
+          msg : 'changed',
+          collection : collectionName,
+          id : _.uniqueId('id'),
+          fields : randomObject()
+        };
+      }, numberOfMessages)
     },
-    added : () => {
-      return JSON.stringify({
-        msg : 'added',
-        collection : _.uniqueId('collection'),
-        id : _.uniqueId('id'),
-        fields : randomObject()
-      });
+    added : (numberOfMessages) => {
+      const collectionName = _.uniqueId('collection');
+      return generateMessages(() => {
+        return {
+          msg : 'added',
+          collection : collectionName,
+          id : _.uniqueId('id'),
+          fields : randomObject()
+        };
+      }, numberOfMessages);
     },
     removed : () => {
-      return JSON.stringify({
+      return {
         msg : 'removed',
         collection : _.uniqueId('collection'),
         id : _.uniqueId('id')
-      });
+      };
     },
     sub : () => {
-      return JSON.stringify({
+      return {
         msg : 'sub',
         id : _.uniqueId('id'),
         name : _.uniqueId('sub-name'),
         params : randomArray()
-      });
+      };
     },
     ready : () => {
-      return JSON.stringify({
+      return {
         msg : 'ready',
         subs : randomArray()
-      });
+      };
     },
     method : () => {
-      return JSON.stringify({
+      return {
         msg : 'method',
         method : _.uniqueId('method'),
         params : randomArray(),
         id : _.uniqueId('id'),
-      });
+      };
     },
     updated : () => {
-      return JSON.stringify({
+      return {
         msg : 'updated',
         methods : randomArray()
-      });
+      };
     },
     connect : () => {
-      return JSON.stringify({
+      return {
         msg : 'connect',
         version : _.uniqueId('version'),
         support : randomArray()
-      }); 
+      }; 
     },
     result : () => {
-      return JSON.stringify({
+      return {
         msg : 'result',
         id : _.uniqueId('version'),
         result : randomObject()
-      });
+      };
     },
     resultWithError : () => {
-      return JSON.stringify({
+      return {
         msg : 'result',
         id : _.uniqueId('version'),
         error : randomObject()
-      });
+      };
     }
   },
 
   generate (spec) {
     // message spec
     // {
-    //  type: <message type defined in DDPMessages>
+    //  type: <message type defined in DDPMessages>,
+    //  numberOfMessages: <number of messages to generate, defaults to>
     // }
     
-    if(spec && spec.type){
-      return this.DDPMessages[spec.type].call(this);
-    } else {
-      const supportedMessages = _.keys(this.DDPMessages);
-      return this.DDPMessages[
-        supportedMessages[_.random(0,supportedMessages.length-1)]
-      ].call(this); 
-    }
+    const supportedMessages = _.keys(this.DDPMessages); 
+    const type = (spec && spec.type) ||
+      supportedMessages[_.random(0,supportedMessages.length-1)]
+
+    return this.runGenerator(type, spec && spec.numberOfMessages);
+  },
+
+  runGenerator : function(type, numberOfMessages){
+    const data = this.DDPMessages[type].call(this, numberOfMessages);
+    return JSON.stringify(
+      data.length === 1 ? data[0] : data
+    );
   }
 };
