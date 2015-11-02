@@ -9,8 +9,9 @@ export default React.createClass({
   propTypes: {
     data: React.PropTypes.shape({
       isOutbound : React.PropTypes.bool.isRequired,
-      message : React.PropTypes.object.isRequired
-    }).isRequired,
+      message : React.PropTypes.object.isRequired,
+      label : React.PropTypes.string
+    }).isRequired
   },
 
   getInitialState () {
@@ -37,18 +38,16 @@ export default React.createClass({
       'fa-minus-square-o' : this.state.isExpanded,
       'fa-plus-square-o' : !this.state.isExpanded
     });  
-    const tooltip = this.props.data.isOutbound ?
-      'Client says:' : 'Server says:';
-
+    const tooltip = this.props.data.isOutbound ? 'Client says: ' : 'Server says: ';
     const compactJSONString = Helpers.unescapeBackSlashes(
         Helpers.compactJSONString(JSON.stringify(this.props.data.message), 50))
-
     const jsonTree = this.state.isExpanded ? 
       <JSONTree data={ this.props.data.message } getArrowStyle={getStyle} /> : null;
 
     return (
       <li className={itemClass}>
         <i className={directionIconClass} tooltip="${tooltip}"></i> {tooltip} 
+        <strong>{this.props.data.label}</strong>&nbsp;
         <span className="op-label" onClick={this.onExpandToggle}>{compactJSONString}
           <i className={toggleIconClass}></i>
         </span>
