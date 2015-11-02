@@ -65,7 +65,7 @@ export default {
       // inside standalone web app
       setInterval(function(){
         Actions.addTrace({
-          messageJSON: DDPMessageGenerator.generate(),
+          messageJSON: JSON.stringify(DDPMessageGenerator.generate()),
           isOutbound: true
         });
       },1000);

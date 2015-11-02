@@ -1,6 +1,6 @@
 {
   "name": "ddpmonitor",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "Monitor Meteor DDP Traffic in Chrome",
   "repository": {
     "type": "git",
@@ -12,7 +12,8 @@
   ],
   "scripts": {
     "start": "node server.js",
-    "test": "eslint . && BABEL_JEST_STAGE=0 jest"
+    "test": "eslint . && BABEL_JEST_STAGE=0 jest",
+    "chrome": "npm run test && webpack"
   },
   "jest": {
     "scriptPreprocessor": "./node_modules/babel-jest",

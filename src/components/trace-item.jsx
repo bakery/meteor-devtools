@@ -2,16 +2,16 @@ import React from 'react';
 import Actions from '../actions';
 import JSONTree from 'react-json-tree';
 import classNames from 'classnames';
+import Helpers from '../helpers';
 
 export default React.createClass({
 
   propTypes: {
     data: React.PropTypes.shape({
-      _id: React.PropTypes.string.isRequired,
       isOutbound : React.PropTypes.bool.isRequired,
-      jsonString : React.PropTypes.string.isRequired,
-      compactJSONString : React.PropTypes.string.isRequired
-    }).isRequired,
+      message : React.PropTypes.object.isRequired,
+      label : React.PropTypes.string
+    }).isRequired
   },
 
   getInitialState () {
@@ -38,16 +38,17 @@ export default React.createClass({
       'fa-minus-square-o' : this.state.isExpanded,
       'fa-plus-square-o' : !this.state.isExpanded
     });  
-    const tooltip = this.props.data.isOutbound ?
-      'Client says:' : 'Server says:';
-
+    const tooltip = this.props.data.isOutbound ? 'Client says: ' : 'Server says: ';
+    const compactJSONString = Helpers.unescapeBackSlashes(
+        Helpers.compactJSONString(JSON.stringify(this.props.data.message), 50))
     const jsonTree = this.state.isExpanded ? 
-      <JSONTree data={ JSON.parse(this.props.data.jsonString) } getArrowStyle={getStyle} /> : null;
+      <JSONTree data={ this.props.data.message } getArrowStyle={getStyle} /> : null;
 
     return (
-      <li className={itemClass} key={this.props.data._id}>
+      <li className={itemClass}>
         <i className={directionIconClass} tooltip="${tooltip}"></i> {tooltip} 
-        <span className="op-label" onClick={this.onExpandToggle}>{this.props.data.compactJSONString}
+        <strong>{this.props.data.label}</strong>&nbsp;
+        <span className="op-label" onClick={this.onExpandToggle}>{compactJSONString}
           <i className={toggleIconClass}></i>
         </span>
         {jsonTree}

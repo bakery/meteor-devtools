@@ -2,21 +2,6 @@ import Dispatcher from './dispatcher';
 import Constants from './constants';
 import  _ from 'underscore';
 
-let compactJSONString = (d, maxLength) => {
-  var str  = JSON.stringify(d);
-  if(str.length <= maxLength){
-    return str;
-  } else { 
-    var postFix = ' ... }';
-    return [str.substr(0,maxLength - postFix.length),
-      postFix].join('');
-  }
-};
-
-let unescapeBackSlashes = (str) => {
-  return str.replace(/\\"/g, '"');
-};
-
 module.exports = {
   addTrace(data){
     let isValid = data && data.messageJSON && 
@@ -31,9 +16,7 @@ module.exports = {
         Dispatcher.dispatch({
           type : Constants.NEW_TRACE,
           data : {
-            jsonString : unescapeBackSlashes(JSON.stringify(m)),
-            compactJSONString : 
-              unescapeBackSlashes(compactJSONString(m, 50)),
+            jsonString : JSON.stringify(m),
             isOutbound : data.isOutbound
           }
         });
