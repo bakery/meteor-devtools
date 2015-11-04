@@ -10,7 +10,8 @@ export default React.createClass({
     data: React.PropTypes.shape({
       isOutbound : React.PropTypes.bool.isRequired,
       message : React.PropTypes.object.isRequired,
-      label : React.PropTypes.string
+      label : React.PropTypes.string,
+      operation : React.PropTypes.string
     }).isRequired
   },
 
@@ -43,10 +44,14 @@ export default React.createClass({
         Helpers.compactJSONString(JSON.stringify(this.props.data.message), 50))
     const jsonTree = this.state.isExpanded ? 
       <JSONTree data={ this.props.data.message } getArrowStyle={getStyle} /> : null;
+    const iconClass = classNames({
+      'client' : this.props.data.isOutbound, 
+      'server' : !this.props.data.isOutbound
+    }, this.props.data.operation);
 
     return (
       <li className={itemClass}>
-        <i className={directionIconClass} tooltip="${tooltip}"></i> {tooltip} 
+        <span className={iconClass} title="${tooltip}"></span> {tooltip} 
         <strong>{this.props.data.label}</strong>&nbsp;
         <span className="op-label" onClick={this.onExpandToggle}>{compactJSONString}
           <i className={toggleIconClass}></i>
