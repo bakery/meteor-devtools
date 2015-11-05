@@ -71,12 +71,13 @@ export default {
     (traces) => {
       return _.map(traces, (t) => {
         let label = t.message.msg;
+        let operation = label;
 
         if(_.isArray(t.message)){
           // dealing with a grouped message
           const count = t.message.length;
-          const operation = _.first(t.message).msg;
           const collection = _.first(t.message).collection;
+          operation = _.first(t.message).msg;
           label = operation;
 
           switch(operation){
@@ -93,7 +94,8 @@ export default {
         }
 
         return _.extend(t,{
-          label : label
+          label : label,
+          operation : operation
         });
       });
     }
