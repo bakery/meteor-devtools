@@ -52,12 +52,15 @@ export default {
         };
       }, numberOfMessages);
     },
-    removed : () => {
-      return {
-        msg : 'removed',
-        collection : _.uniqueId('collection'),
-        id : _.uniqueId('id')
-      };
+    removed : (numberOfMessages) => {
+      const collectionName = _.uniqueId('collection');
+      return generateMessages(() => {
+        return {
+          msg : 'removed',
+          collection : collectionName,
+          id : _.uniqueId('id')
+        };
+      }, numberOfMessages);
     },
     sub : () => {
       return {
