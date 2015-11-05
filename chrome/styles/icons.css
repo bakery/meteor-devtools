@@ -1,0 +1,84 @@
+.client, .server {
+    height: 24px;
+    width: 24px;
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 5px;
+    background-size: 100%;
+}
+
+.server {
+    background-image: url('../icons/server.png');
+}
+
+.server.added {
+    background-image: url('../icons/server-added.png');
+}
+
+.server.removed {
+    background-image: url('../icons/server-removed.png');
+} 
+
+.server.updated {
+    background-image: url('../icons/server-updated.png');
+}
+
+.server.changed {
+    background-image: url('../icons/server-changed.png');
+}
+
+.server.ping {
+    background-image: url('../icons/server-ping.png');
+}
+
+.server.pong {
+    background-image: url('../icons/server-pong.png');
+}
+
+.server.ready {
+    background-image: url('../icons/server-ready.png');
+}
+
+.server.connected {
+    background-image: url('../icons/server-connected.png');
+}
+
+.server.result {
+    background-image: url('../icons/server-result.png');
+}
+
+.client {
+    background-image: url('../icons/client.png');
+}
+
+.client.added {
+    background-image: url('../icons/client-added.png');
+}
+
+.client.removed {
+    background-image: url('../icons/client-removed.png');
+}
+
+.client.changed {
+    background-image: url('../icons/client-changed.png');
+}
+
+.client.sub {
+    background-image: url('../icons/client-sub.png');
+}
+
+.client.ping {
+    background-image: url('../icons/client-ping.png');
+}
+
+.client.pong {
+    background-image: url('../icons/client-pong.png');
+}
+
+.client.method {
+    background-image: url('../icons/client-pong.png');
+}
+
+.client.connect {
+    background-image: url('../icons/client-connect.png');
+}

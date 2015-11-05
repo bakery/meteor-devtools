@@ -126,4 +126,19 @@ describe('Message Processor', () => {
     let randomMessageType = 'randommessagetype';
     testLabel({msg: randomMessageType}, randomMessageType);
   });
+
+  it('attaches operation attribute based on the msg type', () => {
+    let keys = _.keys(_.omit(DDPGenerator.DDPMessages,'resultWithError'));
+    _.each(keys, (type) => {
+      let m = DDPGenerator.generate({type});
+      let r = runProcessor([m]);
+      expect(r[0].operation).toEqual(type);
+    })
+  });
+
+  it('attaches operation attribute correctly for grouped items', () => {
+    let ms = DDPGenerator.generate({type: 'added', numberOfMessages: 4});
+    let rs = runProcessor(ms);
+    expect(rs[0].operation).toEqual('added');
+  });
 });
