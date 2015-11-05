@@ -39,7 +39,7 @@ export default React.createClass({
       'fa-minus-square-o' : this.state.isExpanded,
       'fa-plus-square-o' : !this.state.isExpanded
     });  
-    const tooltip = this.props.data.isOutbound ? 'Client says: ' : 'Server says: ';
+    const tooltip = this.props.data.isOutbound ? 'Client says' : 'Server says';
     const compactJSONString = Helpers.unescapeBackSlashes(
         Helpers.compactJSONString(JSON.stringify(this.props.data.message), 50))
     const jsonTree = this.state.isExpanded ? 
@@ -51,7 +51,7 @@ export default React.createClass({
 
     return (
       <li className={itemClass}>
-        <span className={iconClass} title="${tooltip}"></span> {tooltip} 
+        <span className={iconClass} title={tooltip}></span>
         <strong>{this.props.data.label}</strong>&nbsp;
         <span className="op-label" onClick={this.onExpandToggle}>{compactJSONString}
           <i className={toggleIconClass}></i>
