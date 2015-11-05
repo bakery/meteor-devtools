@@ -13,13 +13,19 @@ const Store = Object.assign(EventEmitter.prototype, {
     return TraceProcessor.processTraces(this.data);
   },
 
-  addTrace(item){
-    this.data.push(_.extend({}, {
-      message : JSON.parse(item.jsonString),
-      isOutbound : item.isOutbound,
+  transformMessage(message, isOutbound) {
+    return {
+      message : message,
+      isOutbound : isOutbound,
       _id : _.uniqueId('trace'),
       _timestamp : _.now()
-    }));
+    };
+  },
+
+  addTrace(item){
+    this.data.push(
+      this.transformMessage(JSON.parse(item.jsonString), item.isOutbound)
+    );
     this.emit('change');
   },
 
