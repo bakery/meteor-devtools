@@ -1,9 +1,9 @@
-jest.dontMock('../src/store');
+jest.dontMock('../src/trace-store');
 jest.dontMock('../src/ddp-generator');
 jest.dontMock('underscore');
 
 const _ = require('underscore');
-const Store = require('../src/store');
+const Store = require('../src/trace-store');
 const TraceProcessor = require('../src/trace-processor');
 const DDPGenerator = require('../src/ddp-generator');
 

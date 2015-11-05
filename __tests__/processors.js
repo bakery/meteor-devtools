@@ -3,7 +3,7 @@ jest.autoMockOff();
 const _ = require('underscore');
 const DDPGenerator = require('../src/ddp-generator');
 const TraceProcessor = require('../src/trace-processor');
-const Store = require('../src/store');
+const Store = require('../src/trace-store');
 
 let runProcessor = (traces, isOutbound=true) => {
   // XX: need to prepare traces using
