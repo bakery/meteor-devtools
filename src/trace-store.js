@@ -3,6 +3,7 @@ import Dispatcher from './dispatcher';
 import Constants from './constants';
 import _ from 'underscore';
 import TraceProcessor from './trace-processor';
+import FilterStore from './filter-store';
 
 let data = [];
 
@@ -10,7 +11,10 @@ const Store = Object.assign(EventEmitter.prototype, {
   data: [],
 
   getState(){
-    return TraceProcessor.processTraces(this.data);
+    let filters = FilterStore.getState();
+    return TraceProcessor.processTraces(
+      TraceProcessor.filterTraces(this.data, filters)
+    );
   },
 
   transformMessage(message, isOutbound) {
@@ -32,7 +36,12 @@ const Store = Object.assign(EventEmitter.prototype, {
   clear(){
     this.data = [];
     this.emit('change');
+  },
+
+  refresh(){
+    this.emit('change');
   }
+
 });
 
 Dispatcher.register(function(action){
@@ -40,11 +49,11 @@ Dispatcher.register(function(action){
     case Constants.NEW_TRACE:
       Store.addTrace(action.data);
       break;
-    case Constants.TOGGLE_TRACE_EXTEND:
-      Store.toggleTraceExtension(action.data);
-      break;
     case Constants.CLEAR_LOGS:
       Store.clear();
+    case Constants.FILTER_ON:
+    case Constants.FILTER_OFF:
+      Store.refresh();
       break;
   }
 });

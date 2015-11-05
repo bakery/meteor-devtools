@@ -37,3 +37,8 @@ ul.network-traces > li .op-label {
   padding:0.2em;
   word-break:break-all;
 }
+
+.ping-checkbox {
+  display: inline-block;
+  margin-left: 20px;
+}

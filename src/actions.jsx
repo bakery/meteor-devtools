@@ -35,5 +35,19 @@ module.exports = {
       type : Constants.DEBUG,
       data : message
     });
-  } 
+  },
+
+  addFilter(filter){
+    Dispatcher.dispatch({
+      type : Constants.FILTER_ON,
+      data : filter
+    });
+  },
+
+  removeFilter(filter){
+    Dispatcher.dispatch({
+      type : Constants.FILTER_OFF,
+      data : filter
+    });
+  }
 };
