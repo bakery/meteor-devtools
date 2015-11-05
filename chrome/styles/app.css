@@ -34,7 +34,6 @@ ul.network-traces > li.inbound {
 }
 
 ul.network-traces > li .op-label {
-  /* background-color:#ddd; */
   padding:0.2em;
-  border:solid 1px #ccc;
+  word-break:break-all;
 }

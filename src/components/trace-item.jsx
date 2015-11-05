@@ -54,7 +54,7 @@ export default React.createClass({
         <span className={iconClass} title={tooltip}></span>
         <strong>{this.props.data.label}</strong>&nbsp;
         <span className="op-label" onClick={this.onExpandToggle}>{compactJSONString}
-          <i className={toggleIconClass}></i>
+          &nbsp;<i className={toggleIconClass}></i>
         </span>
         {jsonTree}
       </li>
