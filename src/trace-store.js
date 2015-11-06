@@ -30,9 +30,6 @@ const Store = Object.assign(EventEmitter.prototype, {
     this.data.push(
       this.transformMessage(JSON.parse(item.jsonString), item.isOutbound)
     );
-    if(JSON.parse(item.jsonString).msg === 'ping' || JSON.parse(item.jsonString).msg === 'pong'){
-      console.log('adding ping');
-    }
     this.emit('change');
   },
 
