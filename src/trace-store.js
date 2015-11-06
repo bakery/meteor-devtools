@@ -4,6 +4,7 @@ import Constants from './constants';
 import _ from 'underscore';
 import TraceProcessor from './trace-processor';
 import FilterStore from './filter-store';
+import TraceFilter from './trace-filter';
 
 let data = [];
 
@@ -12,9 +13,8 @@ const Store = Object.assign(EventEmitter.prototype, {
 
   getState(){
     let filters = FilterStore.getState();
-    return TraceProcessor.processTraces(
-      TraceProcessor.filterTraces(this.data, filters)
-    );
+    return TraceFilter.filterTraces(
+      TraceProcessor.processTraces(this.data), filters);
   },
 
   transformMessage(message, isOutbound) {
@@ -30,6 +30,9 @@ const Store = Object.assign(EventEmitter.prototype, {
     this.data.push(
       this.transformMessage(JSON.parse(item.jsonString), item.isOutbound)
     );
+    if(JSON.parse(item.jsonString).msg === 'ping' || JSON.parse(item.jsonString).msg === 'pong'){
+      console.log('adding ping');
+    }
     this.emit('change');
   },
 
