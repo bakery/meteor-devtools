@@ -1,5 +1,5 @@
 import React from 'react';
-import Store from '../store';
+import Store from '../trace-store';
 import TraceItem from './trace-item';
 
 export default React.createClass({

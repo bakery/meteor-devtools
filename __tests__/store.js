@@ -1,11 +1,12 @@
-jest.dontMock('../src/store');
+jest.dontMock('../src/trace-store');
 jest.dontMock('../src/ddp-generator');
 jest.dontMock('underscore');
 
 const _ = require('underscore');
-const Store = require('../src/store');
+const Store = require('../src/trace-store');
 const TraceProcessor = require('../src/trace-processor');
 const DDPGenerator = require('../src/ddp-generator');
+const TraceFilter = require('../src/trace-filter');
 
 describe('Store', function(){
   beforeEach( () => Store.clear() );
@@ -36,6 +37,17 @@ describe('Store', function(){
     expect(transformedMessage.isOutbound).toEqual(isOutbound);
     expect(transformedMessage._id).toBeDefined();
     expect(transformedMessage._timestamp).toBeDefined();
+  });
+
+  it('calls filterTraces on TraceFilter when calling getState', () => {
+    let message = DDPGenerator.generate();
+
+    Store.addTrace({
+      jsonString : JSON.stringify(message),
+      isOutbound : true
+    });
+    Store.getState();
+    expect(TraceFilter.filterTraces).toBeCalled();
   });
 });
 
