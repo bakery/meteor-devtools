@@ -1,6 +1,6 @@
 import _ from 'underscore';
 
-const randomObject = () => {
+let randomObject = () => {
   let result = {};
   _.each(_.range(0,_.random(1, 5)), () => {
     result[_.uniqueId('field')] =
@@ -9,15 +9,15 @@ const randomObject = () => {
   return result;
 };
 
-const randomArray = () => {
+let randomArray = () => {
   return _.map(_.range(0,_.random(1, 5)), () => {
     return _.uniqueId('item')
   });
 };
 
-const generateMessages = (g, numberOfMessages) => {
-  return _.map(_.range(numberOfMessages || 1), function(){
-    return g.call(this);
+let generateMessages = (g, spec = {}) => {
+  return _.map(_.range(spec.numberOfMessages || 1), function(){
+    return _.extend({}, g.call(this), spec.overrides || {});
   });
 };
 
@@ -30,8 +30,8 @@ export default {
     pong : () => {
       return {msg:'pong'};
     },
-    changed : (numberOfMessages) => {
-      const collectionName = _.uniqueId('collection');
+    changed : (spec) => {
+      let collectionName = _.uniqueId('collection');
       return generateMessages(() => {
         return {
           msg : 'changed',
@@ -39,9 +39,9 @@ export default {
           id : _.uniqueId('id'),
           fields : randomObject()
         };
-      }, numberOfMessages)
+      }, spec);
     },
-    added : (numberOfMessages) => {
+    added : (spec) => {
       const collectionName = _.uniqueId('collection');
       return generateMessages(() => {
         return {
@@ -50,9 +50,9 @@ export default {
           id : _.uniqueId('id'),
           fields : randomObject()
         };
-      }, numberOfMessages);
+      }, spec);
     },
-    removed : (numberOfMessages) => {
+    removed : (spec) => {
       const collectionName = _.uniqueId('collection');
       return generateMessages(() => {
         return {
@@ -60,56 +60,70 @@ export default {
           collection : collectionName,
           id : _.uniqueId('id')
         };
-      }, numberOfMessages);
+      }, spec);
     },
-    sub : () => {
-      return {
-        msg : 'sub',
-        id : _.uniqueId('id'),
-        name : _.uniqueId('sub-name'),
-        params : randomArray()
-      };
+    sub : (spec) => {
+      return generateMessages(() => {
+        return {
+          msg : 'sub',
+          id : _.uniqueId('id'),
+          name : _.uniqueId('sub-name'),
+          params : randomArray()
+        };
+      }, spec);
     },
-    ready : () => {
-      return {
-        msg : 'ready',
-        subs : randomArray()
-      };
+    ready : (spec) => {
+      return generateMessages(() => {
+        return {
+          msg : 'ready',
+          subs : randomArray()
+        };
+      }, spec);
     },
-    method : () => {
-      return {
-        msg : 'method',
-        method : _.uniqueId('method'),
-        params : randomArray(),
-        id : _.uniqueId('id'),
-      };
+    method : (spec) => {
+      return generateMessages(() => {
+        return {
+          msg : 'method',
+          method : _.uniqueId('method'),
+          params : randomArray(),
+          id : _.uniqueId('id')
+        };
+      }, spec);
     },
-    updated : () => {
-      return {
-        msg : 'updated',
-        methods : randomArray()
-      };
+    updated : (spec) => {
+      return generateMessages(() => {
+        return {
+          msg : 'updated',
+          methods : randomArray()
+        };
+      }, spec);
     },
-    connect : () => {
-      return {
-        msg : 'connect',
-        version : _.uniqueId('version'),
-        support : randomArray()
-      }; 
+    connect : (spec) => {
+      return generateMessages(() => {
+        return {
+          msg : 'connect',
+          version : _.uniqueId('version'),
+          support : randomArray()
+        };
+      }, spec); 
     },
-    result : () => {
-      return {
-        msg : 'result',
-        id : _.uniqueId('version'),
-        result : randomObject()
-      };
+    result : (spec) => {
+      return generateMessages(() => {
+        return {
+          msg : 'result',
+          id : _.uniqueId('version'),
+          result : randomObject()
+        };
+      }, spec);
     },
-    resultWithError : () => {
-      return {
-        msg : 'result',
-        id : _.uniqueId('version'),
-        error : randomObject()
-      };
+    resultWithError : (spec) => {
+      return generateMessages(() => {
+        return {
+          msg : 'result',
+          id : _.uniqueId('version'),
+          error : randomObject()
+        };
+      }, spec);
     }
   },
 
@@ -118,17 +132,18 @@ export default {
     // {
     //  type: <message type defined in DDPMessages>,
     //  numberOfMessages: <number of messages to generate, defaults to 1>
+    //  overrides: <attributes to override on the new message> 
     // }
     
     const supportedMessages = _.keys(this.DDPMessages); 
     const type = (spec && spec.type) ||
       supportedMessages[_.random(0,supportedMessages.length-1)];
 
-    return this.runGenerator(type, spec && spec.numberOfMessages);
+    return this.runGenerator(type, spec);
   },
 
-  runGenerator : function(type, numberOfMessages){
-    const data = this.DDPMessages[type].call(this, numberOfMessages);
+  runGenerator : function(type, spec){
+    const data = this.DDPMessages[type].call(this, spec);
     return data.length === 1 ? data[0] : data;
   }
 };
