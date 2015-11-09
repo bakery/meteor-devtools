@@ -1,19 +1,13 @@
 import React from 'react';
 import Actions from '../actions';
-import JSONTree from 'react-json-tree';
 import classNames from 'classnames';
 import Helpers from '../helpers';
+import TraceItemTabs from './trace-item-tabs';
+import ItemPropTypes from './trace-item-prop-types';
 
 export default React.createClass({
 
-  propTypes: {
-    data: React.PropTypes.shape({
-      isOutbound : React.PropTypes.bool.isRequired,
-      message : React.PropTypes.object.isRequired,
-      label : React.PropTypes.string,
-      operation : React.PropTypes.string
-    }).isRequired
-  },
+  propTypes: ItemPropTypes,
 
   getInitialState () {
     return { isExpanded : false };
@@ -24,30 +18,28 @@ export default React.createClass({
   },
 
   render () {
-    
-    const getStyle = (type, expanded) => ({ marginTop: 4 })
-
-    const itemClass = classNames({
+    let itemClass = classNames({
       outbound : this.props.data.isOutbound,
       inbound : !this.props.data.isOutbound
     });
-    const directionIconClass = classNames('fa', {
+    let directionIconClass = classNames('fa', {
       'fa-arrow-circle-o-up' : this.props.data.isOutbound, 
       'fa-arrow-circle-o-down' : !this.props.data.isOutbound
     });
-    const toggleIconClass = classNames('fa', {
+    let toggleIconClass = classNames('fa', {
       'fa-minus-square-o' : this.state.isExpanded,
       'fa-plus-square-o' : !this.state.isExpanded
     });  
-    const tooltip = this.props.data.isOutbound ? 'Client says' : 'Server says';
-    const compactJSONString = Helpers.unescapeBackSlashes(
-        Helpers.compactJSONString(JSON.stringify(this.props.data.message), 50))
-    const jsonTree = this.state.isExpanded ? 
-      <JSONTree data={ this.props.data.message } getArrowStyle={getStyle} /> : null;
-    const iconClass = classNames({
+    let tooltip = this.props.data.isOutbound ? 'Client says' : 'Server says';
+    let compactJSONString = Helpers.unescapeBackSlashes(
+        Helpers.compactJSONString(JSON.stringify(this.props.data.message), 50));
+    let iconClass = classNames({
       'client' : this.props.data.isOutbound, 
       'server' : !this.props.data.isOutbound
     }, this.props.data.operation);
+    let tabs = this.state.isExpanded
+      ? <TraceItemTabs data={this.props.data} /> 
+      : null;
 
     return (
       <li className={itemClass}>
@@ -56,7 +48,7 @@ export default React.createClass({
         <span className="op-label" onClick={this.onExpandToggle}>{compactJSONString}
           &nbsp;<i className={toggleIconClass}></i>
         </span>
-        {jsonTree}
+        {tabs}
       </li>
     )
   }
