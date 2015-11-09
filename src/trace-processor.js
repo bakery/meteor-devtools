@@ -2,6 +2,7 @@ import _ from 'underscore';
 import Groups from './processors/groups';
 import Labels from './processors/labels';
 import Operations from './processors/operations';
+import Associations from './processors/associations';
 
 export default {
   processTraces(traces) {
@@ -11,5 +12,10 @@ export default {
     );
   },
 
-  processors : [new Groups(), new Labels(), new Operations()]
+  processors : [
+    new Groups(), 
+    new Labels(), 
+    new Operations(), 
+    new Associations()
+  ]
 };

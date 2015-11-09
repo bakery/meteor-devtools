@@ -141,4 +141,35 @@ describe('Message Processor', () => {
     let rs = runProcessor(ms);
     expect(rs[0].operation).toEqual('added');
   });
+
+  it('attaches request object for the ready message', () => {
+    let subMessage = DDPGenerator.generate({ type : 'sub' });
+    let readyMessage = DDPGenerator.generate({ 
+      type : 'ready',
+      overrides : {
+        id : subMessage.id
+      }
+    });
+    let rs = runProcessor([subMessage, readyMessage]);
+
+    expect(rs[1].operation).toEqual('ready');
+    expect(rs[1].request).toBeDefined();
+    expect(rs[1].request).toEqual(rs[0]);
+  });
+
+  it('attaches request object for the result message', () => {
+    let methodMessage = DDPGenerator.generate({ type : 'method' });
+    let resultMessage = DDPGenerator.generate({ 
+      type : 'result',
+      overrides : {
+        id : methodMessage.id
+      }
+    });
+    
+    let rs = runProcessor([methodMessage, resultMessage]);
+    
+    expect(rs[1].operation).toEqual('result');
+    expect(rs[1].request).toBeDefined();
+    expect(rs[1].request).toEqual(rs[0]);
+  });
 });
