@@ -13,9 +13,9 @@ export default {
   },
 
   processors : [
-    new Groups(), 
-    new Labels(), 
+    new Groups(),
     new Operations(), 
-    new Associations()
+    new Associations(),
+    new Labels(),
   ]
 };

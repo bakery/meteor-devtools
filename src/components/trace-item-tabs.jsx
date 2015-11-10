@@ -6,6 +6,15 @@ import {Tab, Tabs, TabList, TabPanel} from 'react-tabs';
 export default React.createClass({
   propTypes: ItemPropTypes,
 
+  _getRequestTabLabel () {
+    const mappings = {
+      ready : 'Subscription',
+      result : 'Method'
+    };
+    let label = mappings[this.props.data.operation];
+    return label ? label : 'Request'
+  },
+
   _renderMessage (data) {
     let getStyle = (type, expanded) => ({ marginTop: 4 });
     return <JSONTree data={data} getArrowStyle={getStyle} />;
@@ -17,7 +26,7 @@ export default React.createClass({
     ];
 
     if(this.props.data.request){
-      l.push(<Tab>Request</Tab>);
+      l.push(<Tab>{this._getRequestTabLabel()}</Tab>);
     }
 
     return l;
@@ -31,11 +40,8 @@ export default React.createClass({
     ];
 
     if(this.props.data.request){
-      // tb.push(<TabPanel>
-      //   {this._renderMessage(this.props.data.request.message)}
-      // </TabPanel>);
       tb.push(<TabPanel>
-        <h2>hello</h2>
+        {this._renderMessage(this.props.data.request.message)}
       </TabPanel>);
     }
 

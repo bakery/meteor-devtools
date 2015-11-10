@@ -4,8 +4,22 @@ import Actions from '../actions';
 import TraceList from './trace-list';
 import ClearLogsButton from './clear-logs-button';
 import PingPongFilter from './ping-pong-filter';
+import NotificationSystem from 'react-notification-system';
 
 export default React.createClass({
+
+  showGlobalError: function(msg) {
+    this._notificationSystem.addNotification({
+      message: msg,
+      level: 'error',
+      position: 'br'
+    });
+  },
+
+  componentDidMount: function() {
+    this._notificationSystem = this.refs.notificationSystem;
+  },
+
   render(){
     return (
       <div>
@@ -16,6 +30,7 @@ export default React.createClass({
           <PingPongFilter />
         </header>
         <TraceList />
+        <NotificationSystem ref="notificationSystem" />
       </div>
     )
   }

@@ -95,8 +95,8 @@ describe('Message Processor', () => {
     });
   });
 
-  it('attaches correct label for **ping/pong/connect/updated/result**', () => {
-    _.each(['ping','pong','connect','updated','result'], (type) => {
+  it('attaches correct label for **ping/pong/connect/updated**', () => {
+    _.each(['ping','pong','connect','updated'], (type) => {
       let message = DDPGenerator.generate({ type });
       testLabel(message, type);
     });
@@ -110,9 +110,27 @@ describe('Message Processor', () => {
   });
 
   it('attaches correct label for **ready**', () => {
-    let message = DDPGenerator.generate({ type : 'ready' });
-    let subs = message.subs.join(', ')
-    testLabel(message, `subscription ready for ${subs}`);
+    let subMessage = DDPGenerator.generate({ type : 'sub' });
+    let message = DDPGenerator.generate({ 
+      type : 'ready',
+      overrides : {
+        subs : [subMessage.id]
+      }
+    });
+    testLabel([message, subMessage], 
+      `subscription ready for ${subMessage.name}`);
+  });
+
+  it('attaches correct label for **result**', () => {
+    let methodMessage = DDPGenerator.generate({ type : 'method' });
+    let message = DDPGenerator.generate({ 
+      type : 'result',
+      overrides : {
+        id : methodMessage.id
+      } 
+    });
+    testLabel([message, methodMessage], 
+      `got result for method ${methodMessage.method}`);
   });
 
   it('attaches correct label for **method**', () => {
@@ -147,7 +165,7 @@ describe('Message Processor', () => {
     let readyMessage = DDPGenerator.generate({ 
       type : 'ready',
       overrides : {
-        id : subMessage.id
+        subs : [subMessage.id]
       }
     });
     let rs = runProcessor([subMessage, readyMessage]);
