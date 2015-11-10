@@ -95,8 +95,8 @@ describe('Message Processor', () => {
     });
   });
 
-  it('attaches correct label for **ping/pong/connect/updated/result**', () => {
-    _.each(['ping','pong','connect','updated','result'], (type) => {
+  it('attaches correct label for **ping/pong/connect/updated**', () => {
+    _.each(['ping','pong','connect','updated'], (type) => {
       let message = DDPGenerator.generate({ type });
       testLabel(message, type);
     });
@@ -110,9 +110,27 @@ describe('Message Processor', () => {
   });
 
   it('attaches correct label for **ready**', () => {
-    let message = DDPGenerator.generate({ type : 'ready' });
-    let subs = message.subs.join(', ')
-    testLabel(message, `subscription ready for ${subs}`);
+    let subMessage = DDPGenerator.generate({ type : 'sub' });
+    let message = DDPGenerator.generate({ 
+      type : 'ready',
+      overrides : {
+        subs : [subMessage.id]
+      }
+    });
+    testLabel([message, subMessage], 
+      `subscription ready for ${subMessage.name}`);
+  });
+
+  it('attaches correct label for **result**', () => {
+    let methodMessage = DDPGenerator.generate({ type : 'method' });
+    let message = DDPGenerator.generate({ 
+      type : 'result',
+      overrides : {
+        id : methodMessage.id
+      } 
+    });
+    testLabel([message, methodMessage], 
+      `got result for method ${methodMessage.method}`);
   });
 
   it('attaches correct label for **method**', () => {
@@ -140,5 +158,36 @@ describe('Message Processor', () => {
     let ms = DDPGenerator.generate({type: 'added', numberOfMessages: 4});
     let rs = runProcessor(ms);
     expect(rs[0].operation).toEqual('added');
+  });
+
+  it('attaches request object for the ready message', () => {
+    let subMessage = DDPGenerator.generate({ type : 'sub' });
+    let readyMessage = DDPGenerator.generate({ 
+      type : 'ready',
+      overrides : {
+        subs : [subMessage.id]
+      }
+    });
+    let rs = runProcessor([subMessage, readyMessage]);
+
+    expect(rs[1].operation).toEqual('ready');
+    expect(rs[1].request).toBeDefined();
+    expect(rs[1].request).toEqual(rs[0]);
+  });
+
+  it('attaches request object for the result message', () => {
+    let methodMessage = DDPGenerator.generate({ type : 'method' });
+    let resultMessage = DDPGenerator.generate({ 
+      type : 'result',
+      overrides : {
+        id : methodMessage.id
+      }
+    });
+    
+    let rs = runProcessor([methodMessage, resultMessage]);
+    
+    expect(rs[1].operation).toEqual('result');
+    expect(rs[1].request).toBeDefined();
+    expect(rs[1].request).toEqual(rs[0]);
   });
 });

@@ -5,9 +5,14 @@ import Bridge from './bridge';
 import Actions from './actions';
 
 let node = document.querySelector('.app-container');
+let theApp = null;
 
-Bridge.setup(() => {
-  ReactDOM.unmountComponentAtNode(node);
-  node.innerHTML = '';
-  ReactDOM.render(<AppContainer />, node);
-}, (message) => console.error(message));
+try {
+  Bridge.setup(() => {
+    ReactDOM.unmountComponentAtNode(node);
+    node.innerHTML = '';
+    theApp = ReactDOM.render(<AppContainer />, node);
+  }, (message) => console.error(message));
+} catch(e) {
+  theApp.showGlobalError(e.toString());
+}

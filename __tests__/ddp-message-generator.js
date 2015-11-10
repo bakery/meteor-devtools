@@ -206,6 +206,45 @@ describe('DDPMessageGenerator.generate', () => {
     expect(() => DDPMessageGenerator.generate({ type : 'not-a-valid-message' })).toThrow();
   });
 
+  it('supports message attributes overrides', () => {
+    let subs = ['1','2','3'];
+    let id = '54';
+    let numberOfMessages = 5;
+    let collectionName = 'my-collection';
+
+    let msg = DDPMessageGenerator.generate({
+      type : 'ready',
+      overrides : {
+        subs : subs  
+      }
+    });
+    checkMessageFormat(msg, messageChecks.ready);
+    expect(msg.subs).toEqual(subs);
+
+    msg = DDPMessageGenerator.generate({
+      type : 'result',
+      overrides : {
+        id : id
+      }
+    });
+    checkMessageFormat(msg, messageChecks.result);
+    expect(msg.id).toEqual(id);
+
+    let msgs = DDPMessageGenerator.generate({
+      type : 'added',
+      numberOfMessages : numberOfMessages,
+      overrides : {
+        collection : collectionName
+      }
+    });
+    
+    checkMessageFormat(msgs, messageChecks.added, numberOfMessages);
+    
+    expect(
+      _.pluck(msgs,'collection')[0] === collectionName
+    ).toBeTruthy();
+  });
+
   it('generates a random message when a spec is not given', () => {
     let supportedMessages = _.keys(DDPMessageGenerator.DDPMessages);
     let msg = DDPMessageGenerator.generate();
