@@ -42,3 +42,19 @@ ul.network-traces > li .op-label {
   display: inline-block;
   margin-left: 20px;
 }
+
+/* customize react tabs */
+
+.react-tabs {
+  margin-left: -0.5em;
+  margin-right: -0.5em;
+  margin-top: 0.5em;
+}
+
+.react-tabs > ul > li {
+  border-radius: 0 !important;
+}
+
+.react-tabs > ul > li:first-child {
+  margin-left: 9px !important;
+}
