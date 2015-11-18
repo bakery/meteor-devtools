@@ -1,9 +1,11 @@
-import React from 'react';
-import Actions from '../actions';
+import React, { PropTypes } from 'react';
 
 export default React.createClass({
+  propTypes : {
+    onClearClick : PropTypes.func.isRequired
+  }, 
   onClick (){
-    Actions.clearLogs();
+    this.props.onClearClick();
   },
   render (){
     return (

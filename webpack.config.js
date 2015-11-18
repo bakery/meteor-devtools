@@ -1,4 +1,5 @@
 var path = require('path');
+var webpack = require('webpack');
 
 module.exports = {
   entry: [
@@ -17,6 +18,11 @@ module.exports = {
       }
     ]
   },
+  plugins : [
+    new webpack.DefinePlugin({
+      __DEVTOOLS__: false
+    }),
+  ],
   resolve: {
     extensions: ['', '.js', '.jsx']
   },

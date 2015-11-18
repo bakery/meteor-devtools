@@ -1,16 +1,18 @@
-import React from 'react';
-import Actions from '../actions';
+import React, { PropTypes } from 'react';
 
 export default React.createClass({
+  propTypes : {
+    onToggle : PropTypes.func.isRequired,
+    enabled : PropTypes.bool.isRequired
+  },
   onClick (event){
-    event.target.checked ? 
-        Actions.addFilter(['ping','pong']) : Actions.removeFilter(['ping','pong']);
+    this.props.onToggle('PingPong');
   },
   render (){
     return (
         <div className="ping-checkbox">
-            <input id="hide-ping" onClick={this.onClick} type="checkbox" />
-            <label htmlFor="hide-ping">Hide Ping/Pong</label>
+            <input id="hide-ping" checked={this.props.enabled} onClick={this.onClick} type="checkbox" />
+            <label htmlFor="hide-ping">Show Ping/Pong</label>
         </div>
     )
   }

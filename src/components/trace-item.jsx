@@ -1,5 +1,4 @@
 import React from 'react';
-import Actions from '../actions';
 import classNames from 'classnames';
 import Helpers from '../helpers';
 import TraceItemTabs from './trace-item-tabs';

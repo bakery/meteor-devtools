@@ -3,14 +3,18 @@ jest.autoMockOff();
 const _ = require('underscore');
 const DDPGenerator = require('../src/ddp-generator');
 const TraceProcessor = require('../src/trace-processor');
-const Store = require('../src/trace-store');
 const TraceFilter = require('../src/trace-filter');
 
 let runProcessor = (traces, isOutbound=true) => {
-  // XX: need to prepare traces using
-  // Store.transforMessage before passing it to TraceProcessor
   return TraceProcessor.processTraces(
-    _.map(traces, (m) => Store.transformMessage(m,isOutbound))
+    _.map(traces, (m) => {
+      return _.extend({     
+        message : m,
+        isOutbound : isOutbound,
+        _id : _.uniqueId('trace'),
+        _timestamp : _.now()
+      });
+    })
   );
 };
 
@@ -21,7 +25,12 @@ describe('Trace Filter', () => {
     // process traces before filtering
     let r = runProcessor([sub, ping]);
 
-    let f = TraceFilter.filterTraces(r, ['ping']);
+    let f = TraceFilter.filterTraces(r, {
+      PingPong : {
+        enabled : false,
+        operations : ['ping','pong']
+      }
+    });
     expect(f).toContain(r[0]);
     expect(f).not.toContain(r[1]);
   });

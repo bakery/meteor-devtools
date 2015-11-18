@@ -1,7 +1,5 @@
-import Actions from './actions';
-import Dispatcher from './dispatcher';
-import Constants from './constants';
 import DDPMessageGenerator from './ddp-generator';
+import _ from 'underscore'
 
 let backgroundPageConnection;
 let debug = (message) => {
@@ -11,20 +9,30 @@ let debug = (message) => {
   });
 };
 
-Dispatcher.register(function(action){
-  switch(action.type){
-    case Constants.DEBUG:
-      debug(action.data);
-      break;
-  }
-});
-
 export default {
-  setup(callback, onError){
+  setup(onReady, callback, onReload){
 
-    var onGotMessage = function(message){
+    var onGotMessage = function(message) {
       if(message && message.eventType === 'trace'){
-        Actions.addTrace(message.data);
+        let data = message.data;
+        let isValid = data && data.messageJSON && 
+          typeof data.isOutbound !== 'undefined';
+        
+        if(!isValid){
+          return;
+        }
+
+        let d = JSON.parse(data.messageJSON);  
+        d = _.isArray(d) ? d : [d];
+
+        _.each(d, function(m){
+          m = _.isString(m) ? JSON.parse(m) : m;
+
+          callback && callback.call(this, null, {
+            message: m,
+            isOutbound: data.isOutbound
+          });
+        });
       }
     };
 
@@ -42,7 +50,6 @@ export default {
 
         backgroundPageConnection.onMessage.addListener(function(msg) {
           onGotMessage.call(this, msg);
-          onError(JSON.stringify(msg.data));
         });
       };
 
@@ -54,23 +61,23 @@ export default {
         chrome.devtools.inspectedWindow.eval(xhr.responseText);
       };
 
-      chrome.devtools.network.onNavigated.addListener(function(){
-        pageSetup.call(this);
-        Actions.clearLogs();
-      });
-
       chromeSetup.call(this);
       pageSetup.call(this);
+
+      chrome.devtools.network.onNavigated.addListener(function(){
+        pageSetup.call(this);
+        onReload && onReload.call(this);
+      });
     } else {
       // inside standalone web app
       setInterval(function(){
-        Actions.addTrace({
-          messageJSON: JSON.stringify(DDPMessageGenerator.generate()),
+        callback && callback.call(this, null, {
+          message: DDPMessageGenerator.generate(),
           isOutbound: true
-        });
+        })
       },1000);
     }
 
-    callback && callback.call(this);
+    onReady && onReady.call(this);
   }
 };

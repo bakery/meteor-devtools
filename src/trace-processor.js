@@ -6,8 +6,10 @@ import Associations from './processors/associations';
 
 export default {
   processTraces(traces) {
+    // XX: deep copy
+    let copyOfTraces = JSON.parse(JSON.stringify(traces));
     return _.sortBy(
-      _.reduce(this.processors, (ts, processor) => processor.run(ts), traces), 
+      _.reduce(this.processors, (ts, processor) => processor.run(ts), copyOfTraces),
       (t) => t._timestamp
     );
   },
