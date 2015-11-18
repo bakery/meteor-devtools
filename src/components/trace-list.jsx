@@ -1,11 +1,16 @@
-import React from 'react';
-import Store from '../trace-store';
+import React, { PropTypes } from 'react';
+// import Store from '../trace-store';
 import TraceItem from './trace-item';
 
 export default React.createClass({
-  componentDidMount () {
-    Store.on('change', this.onChange);
+
+  propTypes : {
+    traces : PropTypes.array.isRequired
   },
+
+  // componentDidMount () {
+  //   Store.on('change', this.onChange);
+  // },
 
   componentDidUpdate () {
     var body = document.body, html = document.documentElement;
@@ -18,22 +23,22 @@ export default React.createClass({
     }
   },
 
-  getInitialState () {
-    return {
-      items : []
-    };
-  },
+  // getInitialState () {
+  //   return {
+  //     items : []
+  //   };
+  // },
 
-  onChange () {
-    this.setState({
-      items : Store.getState()
-    });
-  },
+  // onChange () {
+  //   this.setState({
+  //     items : Store.getState()
+  //   });
+  // },
 
   render () {
-    const noData = this.state.items.length === 0 ?
+    const noData = this.props.traces.length === 0 ?
       <div>No traces yet...</div> : null; 
-    const items = this.state.items.map(function(item){
+    const items = this.props.traces.map(function(item){
       return <TraceItem data={item}/>;
     });
     

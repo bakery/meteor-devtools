@@ -3,13 +3,17 @@ jest.autoMockOff();
 const _ = require('underscore');
 const DDPGenerator = require('../src/ddp-generator');
 const TraceProcessor = require('../src/trace-processor');
-const Store = require('../src/trace-store');
 
 let runProcessor = (traces, isOutbound=true) => {
-  // XX: need to prepare traces using
-  // Store.transforMessage before passing it to TraceProcessor
   return TraceProcessor.processTraces(
-    _.map(traces, (m) => Store.transformMessage(m,isOutbound))
+    _.map(traces, (m) => {
+      return {     
+        message : m,
+        isOutbound : isOutbound,
+        _id : _.uniqueId('trace'),
+        _timestamp : _.now()
+      };
+    })
   );
 };
 

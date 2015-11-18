@@ -1,18 +1,43 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import AppContainer from './components/app-container';
+import 'babel-core/polyfill'
+import React from 'react'
+import { render } from 'react-dom'
+import { Provider } from 'react-redux'
 import Bridge from './bridge';
-import Actions from './actions';
+import AppContainer from './containers/app'
+import configureStore from './store/store'
+import { addTrace, clearLogs } from './actions/traces'
+
+const store = configureStore()
 
 let node = document.querySelector('.app-container');
 let theApp = null;
 
 try {
   Bridge.setup(() => {
-    ReactDOM.unmountComponentAtNode(node);
-    node.innerHTML = '';
-    theApp = ReactDOM.render(<AppContainer />, node);
-  }, (message) => console.error(message));
+    node.innerHTML = ''
+    
+    render(<Provider store={store}><AppContainer /></Provider> ,node)
+
+    if(__DEVTOOLS__){
+      const { DevTools, DebugPanel, LogMonitor } = require('redux-devtools/lib/react')
+      render(
+        <div>
+          <Provider store={store}>
+            <AppContainer />
+          </Provider>
+          <DebugPanel bottom right top>
+            <DevTools monitor={LogMonitor} store={store} />
+          </DebugPanel>
+        </div>
+        , node
+      )
+    }
+
+  }, (error, trace) => {
+    if(!error){
+      store.dispatch(addTrace(trace));
+    }
+  }, () => store.dispatch(clearLogs()));
 } catch(e) {
-  theApp.showGlobalError(e.toString());
+  console.error('global error', e);
 }
