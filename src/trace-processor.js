@@ -4,8 +4,8 @@ import Labels from './processors/labels';
 import Operations from './processors/operations';
 import Associations from './processors/associations';
 
-export default {
-  processTraces(traces) {
+module.exports = {
+  processTraces : function(traces){
     // XX: deep copy
     let copyOfTraces = JSON.parse(JSON.stringify(traces));
     return _.sortBy(

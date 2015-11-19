@@ -1,6 +1,6 @@
 import _ from 'underscore';
 
-export default {
+module.exports = {
   filterTraces(traces, filters) {
     
     let disabledFilters = _.reduce(_.keys(filters), (memo, filterName) => { 
