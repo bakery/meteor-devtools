@@ -1,2 +1,3 @@
 chrome/build/bundle.js
+chrome/scripts/lib
 node_modules
