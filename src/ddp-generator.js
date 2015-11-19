@@ -21,7 +21,7 @@ let generateMessages = (g, spec = {}) => {
   });
 };
 
-export default {
+module.exports = {
   
   DDPMessages : {
     ping : () => {
@@ -127,7 +127,7 @@ export default {
     }
   },
 
-  generate (spec) {
+  generate : function(spec){
     // message spec
     // {
     //  type: <message type defined in DDPMessages>,

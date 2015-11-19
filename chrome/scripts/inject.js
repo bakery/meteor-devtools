@@ -1,5 +1,15 @@
 (function(){
   var setup = function(){
+    var getStackTrace = function(stackTraceLimit){
+      var originalStackTraceLimit = Error.stackTraceLimit;
+      try {
+        Error.stackTraceLimit = stackTraceLimit || 15;    
+        return ErrorStackParser.parse(new Error);
+      } finally {
+        Error.stackTraceLimit = originalStackTraceLimit;
+      }
+    };
+
     var talkToExtension = function(eventType, data){
       window.postMessage({
         eventType : eventType, 
@@ -8,20 +18,33 @@
       }, '*'); 
     }; 
 
+    var grabStackAndTalkToExtension = function(message){
+      var stackTrace = getStackTrace(15);
+
+      if(stackTrace && stackTrace.length !== 0){
+        // XX: clean up first 2 traces since they refer to 
+        // account for getStackTrace and grabStackAndTalkToExtension calls
+        stackTrace.splice(0,2);
+      }
+
+      message.stackTrace = stackTrace;
+      talkToExtension('trace', message);
+    };
+
     var oldSend = WebSocket.prototype.send; 
     WebSocket.prototype.send = function(){
       oldSend.apply(this,arguments);
-      talkToExtension('trace', {
+      grabStackAndTalkToExtension({
         messageJSON : arguments[0],
         isOutbound : true 
-      }); 
+      });
     }; 
 
     Meteor.connection._stream.on('message', function(){
-      talkToExtension('trace', {
+      grabStackAndTalkToExtension({
         messageJSON : arguments[0],
         isOutbound : false
-      }); 
+      });
     });
   };
 

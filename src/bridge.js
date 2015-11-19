@@ -10,6 +10,13 @@ let debug = (message) => {
 };
 
 export default {
+
+  openResource(url, lineNumber, callback){
+    if(chrome && chrome.devtools){
+      chrome.devtools.panels.openResource(url, lineNumber, callback);
+    }
+  },
+
   setup(onReady, callback, onReload){
 
     var onGotMessage = function(message) {
@@ -30,7 +37,8 @@ export default {
 
           callback && callback.call(this, null, {
             message: m,
-            isOutbound: data.isOutbound
+            isOutbound: data.isOutbound,
+            stackTrace: data.stackTrace
           });
         });
       }
@@ -53,12 +61,16 @@ export default {
         });
       };
 
-      let pageSetup = () => {
+      let injectScript = (scriptUrl) => {
         let xhr = new XMLHttpRequest();
-        xhr.open('GET', chrome.extension.getURL('/scripts/inject.js'), false);
+        xhr.open('GET', chrome.extension.getURL(scriptUrl), false);
         xhr.send();
-
         chrome.devtools.inspectedWindow.eval(xhr.responseText);
+      };
+
+      let pageSetup = () => {
+        injectScript('/scripts/lib/error-stack-parser.js');
+        injectScript('/scripts/inject.js');
       };
 
       chromeSetup.call(this);

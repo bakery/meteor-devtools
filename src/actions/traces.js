@@ -7,6 +7,7 @@ export function addTrace(trace){
     trace : {
       message : trace.message,//JSON.parse(trace.jsonString),
       isOutbound : trace.isOutbound,
+      stackTrace : trace.stackTrace,
       _id : _.uniqueId('trace'),
       _timestamp : _.now()
     } 

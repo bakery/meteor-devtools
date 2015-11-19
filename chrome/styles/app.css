@@ -58,3 +58,8 @@ ul.network-traces > li .op-label {
 .react-tabs > ul > li:first-child {
   margin-left: 9px !important;
 }
+
+.stack-trace {
+  margin: 1em;
+  font-size: inherit;
+}
