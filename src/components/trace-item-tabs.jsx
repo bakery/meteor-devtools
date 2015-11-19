@@ -67,7 +67,7 @@ export default React.createClass({
             shortUrl; 
         }
 
-        shortUrl = `${shortUrl}:${st.lineNumber}`;
+        shortUrl = st.lineNumber ? `${shortUrl}:${st.lineNumber}` : shortUrl;
 
         return (
           <tr>
