@@ -2,12 +2,10 @@
   var setup = function(){
     var getStackTrace = function(stackTraceLimit){
       var originalStackTraceLimit = Error.stackTraceLimit;
-
       try {
         Error.stackTraceLimit = stackTraceLimit || 15;    
         return ErrorStackParser.parse(new Error);
       } finally {
-        console.error('resetting stackTrace');
         Error.stackTraceLimit = originalStackTraceLimit;
       }
     };

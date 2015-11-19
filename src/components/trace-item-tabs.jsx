@@ -59,16 +59,25 @@ export default React.createClass({
           '(anonymous function)';
 
         if(shortUrl !== '<anonymous>'){
-          let matches = shortUrl.match(/\/([^?\/]*)\?/);
-          shortUrl = matches && matches.length === 2 ? matches[1] : shortUrl
+          let matches = shortUrl.match(/\/([^?\/]*)\?/) ||
+            shortUrl.match(/\/([^\/]*)$/);
+
+          shortUrl = matches && matches.length === 2 ? 
+            matches[1] :
+            shortUrl; 
         }
+
+        shortUrl = `${shortUrl}:${st.lineNumber}`;
 
         return (
           <tr>
             <td>{functionName}</td>
             <td>
               @ <a className="webkit-html-resource-link" href="#"
-                  onClick={ (e) =>  e.preventDefault() && Bridge.openResource(st.fileName, st.lineNumber) }>
+                  onClick={ (e) => {
+                    e.preventDefault(); 
+                    Bridge.openResource(st.fileName, st.lineNumber);
+                  } }>
                   {shortUrl}
                 </a>
             </td>
