@@ -3,6 +3,7 @@ import JSONTree from 'react-json-tree'
 import ItemPropTypes from './trace-item-prop-types'
 import {Tab, Tabs, TabList, TabPanel} from 'react-tabs'
 import Bridge from '../bridge'
+import Warnings from './warnings'
 
 export default React.createClass({
   propTypes: ItemPropTypes,
@@ -32,6 +33,10 @@ export default React.createClass({
 
     if(this.props.data.stackTrace){
       l.push(<Tab>Stack Trace</Tab>); 
+    }
+
+    if(this.props.data.warnings){
+      l.push(<Tab>⚠️ Warnings</Tab>);
     }
 
     return l;
@@ -73,7 +78,7 @@ export default React.createClass({
           <tr>
             <td>{functionName}</td>
             <td>
-              @ <a className="webkit-html-resource-link" href="#"
+              @ <a href="#"
                   onClick={ (e) => {
                     e.preventDefault(); 
                     Bridge.openResource(st.fileName, st.lineNumber);
@@ -92,6 +97,14 @@ export default React.createClass({
           </table>
         </TabPanel>
       );
+    }
+
+    if(this.props.data.warnings){
+      tb.push(
+        <TabPanel>
+          <Warnings warnings={this.props.data.warnings} />
+        </TabPanel>
+      ); 
     }
 
     return tb;

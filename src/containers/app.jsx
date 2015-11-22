@@ -8,6 +8,7 @@ import {clearLogs} from '../actions/traces'
 import {toggleFilter} from '../actions/filters'
 import TraceFilter from '../trace-filter'
 import TraceProcessor from '../trace-processor'
+import Warnings from '../warnings'
 
 class App extends Component {
   showGlobalError(msg) {
@@ -47,7 +48,9 @@ App.propTypes = {
 function mapStateToProps(state){
 
   let filteredTraces = TraceFilter.filterTraces(
-    TraceProcessor.processTraces(state.traces),
+    Warnings.checkForWarnings(
+      TraceProcessor.processTraces(state.traces)
+    ),
     state.filters
   );
 
