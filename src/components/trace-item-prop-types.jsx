@@ -7,6 +7,7 @@ export default {
     message : React.PropTypes.object.isRequired,
     label : React.PropTypes.string,
     operation : React.PropTypes.string,
-    request : React.PropTypes.object
+    request : React.PropTypes.object,
+    warnings : React.PropTypes.array
   }).isRequired
 };

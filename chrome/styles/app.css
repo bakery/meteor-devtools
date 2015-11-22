@@ -38,6 +38,11 @@ ul.network-traces > li .op-label {
   word-break:break-all;
 }
 
+ul.network-traces > li.warning {
+  background-color: #FFEFEF !important;
+  border-color: #FFD8D7 !important;
+}
+
 .ping-checkbox {
   display: inline-block;
   margin-left: 20px;
@@ -53,6 +58,7 @@ ul.network-traces > li .op-label {
 
 .react-tabs > ul > li {
   border-radius: 0 !important;
+  background-color: inherit !important;
 }
 
 .react-tabs > ul > li:first-child {
@@ -62,4 +68,14 @@ ul.network-traces > li .op-label {
 .stack-trace {
   margin: 1em;
   font-size: inherit;
+}
+
+ul.warnings-list {
+  margin: 0;
+  padding: 0;
+}
+
+ul.warnings-list > li {
+  list-style-type:none;
+  padding: 0.5em;
 }

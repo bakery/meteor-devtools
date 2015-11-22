@@ -19,7 +19,8 @@ export default React.createClass({
   render () {
     let itemClass = classNames({
       outbound : this.props.data.isOutbound,
-      inbound : !this.props.data.isOutbound
+      inbound : !this.props.data.isOutbound,
+      warning : typeof this.props.data.warnings !== 'undefined'
     });
     let directionIconClass = classNames('fa', {
       'fa-arrow-circle-o-up' : this.props.data.isOutbound, 
