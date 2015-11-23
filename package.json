@@ -48,6 +48,7 @@
   },
   "dependencies": {
     "classnames": "^2.2.0",
+    "moment": "^2.10.6",
     "react": "^0.14.0",
     "react-dom": "^0.14.0",
     "react-json-tree": "^0.3.0",
