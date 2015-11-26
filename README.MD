@@ -11,7 +11,7 @@ Adds DDP traffic monitor to your Chrome Dev Tools
 
 ## Development
 
-Running local deve server
+Running local dev server
 
 ```bash
 npn start
