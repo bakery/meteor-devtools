@@ -27,7 +27,7 @@ ul.network-traces > li {
   list-style-type:none;
   border-bottom:solid 1px #ccc;
   padding: 0.5em;
-} 
+}
 
 ul.network-traces > li.inbound {
   background-color: #F8F8F8;
@@ -36,6 +36,10 @@ ul.network-traces > li.inbound {
 ul.network-traces > li .op-label {
   padding:0.2em;
   word-break:break-all;
+}
+ul.network-traces > li .timestamp {
+  float: right;
+  color: #8C8C8C;
 }
 
 ul.network-traces > li.warning {

@@ -1,5 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
+import moment from 'moment';
 import Helpers from '../helpers';
 import TraceItemTabs from './trace-item-tabs';
 import ItemPropTypes from './trace-item-prop-types';
@@ -23,23 +24,24 @@ export default React.createClass({
       warning : typeof this.props.data.warnings !== 'undefined'
     });
     let directionIconClass = classNames('fa', {
-      'fa-arrow-circle-o-up' : this.props.data.isOutbound, 
+      'fa-arrow-circle-o-up' : this.props.data.isOutbound,
       'fa-arrow-circle-o-down' : !this.props.data.isOutbound
     });
     let toggleIconClass = classNames('fa', {
       'fa-minus-square-o' : this.state.isExpanded,
       'fa-plus-square-o' : !this.state.isExpanded
-    });  
+    });
     let tooltip = this.props.data.isOutbound ? 'Client says' : 'Server says';
     let compactJSONString = Helpers.unescapeBackSlashes(
         Helpers.compactJSONString(JSON.stringify(this.props.data.message), 50));
     let iconClass = classNames({
-      'client' : this.props.data.isOutbound, 
+      'client' : this.props.data.isOutbound,
       'server' : !this.props.data.isOutbound
     }, this.props.data.operation);
     let tabs = this.state.isExpanded
-      ? <TraceItemTabs data={this.props.data} /> 
+      ? <TraceItemTabs data={this.props.data} />
       : null;
+    let timestamp = moment(this.props.data._timestamp).format('HH:mm:ss');
 
     return (
       <li className={itemClass}>
@@ -47,6 +49,9 @@ export default React.createClass({
         <strong>{this.props.data.label}</strong>&nbsp;
         <span className="op-label" onClick={this.onExpandToggle}>{compactJSONString}
           &nbsp;<i className={toggleIconClass}></i>
+        </span>
+        <span className="timestamp">
+          {timestamp}
         </span>
         {tabs}
       </li>
