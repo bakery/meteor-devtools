@@ -1,6 +1,6 @@
 {
   "name": "ddpmonitor",
-  "version": "0.8.2",
+  "version": "0.8.3",
   "description": "Monitor Meteor DDP Traffic in Chrome",
   "repository": {
     "type": "git",
