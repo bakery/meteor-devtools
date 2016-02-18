@@ -15,6 +15,12 @@ export default React.createClass({
             section in <a href="http://joshowens.me/meteor-security-101/" target="_blank">Security 101</a> by Josh Owens
           </li>
         );
+      case 'unknown-publication':
+        return (
+          <li>
+            You are trying to subscribe to a non-existent publication. Make sure it's been probably exposed through Meteor.publish
+          </li>
+        );
       default:
         return <li>unknown warning</li>; 
 
