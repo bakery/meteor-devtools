@@ -1,8 +1,11 @@
 import UserOverpublish from './user-overpublish';
+import UknownPublication from './unknown-publication';
+
 import _ from 'underscore';
 
 var checks = [
-  new UserOverpublish()
+  new UserOverpublish(),
+  new UknownPublication()
 ];
 
 module.exports = {
