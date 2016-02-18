@@ -1,6 +1,6 @@
 {
   "name": "ddpmonitor",
-  "version": "0.8.1",
+  "version": "0.8.2",
   "description": "Monitor Meteor DDP Traffic in Chrome",
   "repository": {
     "type": "git",
@@ -32,30 +32,29 @@
   },
   "homepage": "https://chrome.google.com/webstore/detail/ddp-monitor/ippapidnnboiophakmmhkdlchoccbgje",
   "devDependencies": {
-    "babel-eslint": "^4.1.3",
+    "babel-eslint": "^5.0.0",
     "babel-jest": "^6.0.1",
     "babel-loader": "^6.2.0",
     "babel-polyfill": "^6.2.0",
     "babel-preset-es2015": "^6.1.18",
     "babel-preset-react": "^6.1.18",
-    "eslint": "^1.7.3",
-    "eslint-plugin-react": "^3.6.3",
+    "eslint": "^2.1.0",
+    "eslint-plugin-react": "^3.16.1",
     "jest-cli": "^0.8.0",
     "react-hot-loader": "^1.3.0",
-    "redux-devtools": "^2.1.5",
     "webpack": "^1.12.2",
     "webpack-dev-server": "^1.12.0"
   },
   "dependencies": {
     "classnames": "^2.2.0",
-    "moment": "^2.10.6",
-    "react": "^0.14.0",
-    "react-dom": "^0.14.0",
-    "react-json-tree": "^0.3.0",
+    "moment": "^2.11.2",
+    "react": "^0.14.7",
+    "react-dom": "^0.14.7",
+    "react-json-tree": "^0.5.3",
     "react-notification-system": "^0.2.5",
-    "react-redux": "^4.0.0",
-    "react-tabs": "^0.5.1",
-    "redux": "^3.0.4",
+    "react-redux": "^4.4.0",
+    "react-tabs": "^0.5.3",
+    "redux": "^3.3.1",
     "underscore": "^1.8.3"
   }
 }

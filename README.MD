@@ -8,3 +8,24 @@
 Adds DDP traffic monitor to your Chrome Dev Tools
 
 ![Meteor DDP Monitor](https://dl.dropboxusercontent.com/u/9224326/ddp-monitor/ddp0.4.gif)
+
+## Development
+
+Running local dev server
+
+```bash
+npn start
+```
+
+Running tests while developing (with reload)
+
+```bash
+npm test -- --watch
+```
+
+Building chrome extension (result in ./chrome)
+
+```bash
+npm run chrome
+```
+
