@@ -15,24 +15,7 @@ let theApp = null;
 try {
   Bridge.setup(() => {
     node.innerHTML = ''
-    
     render(<Provider store={store}><AppContainer /></Provider> ,node)
-
-    if(__DEVTOOLS__){
-      const { DevTools, DebugPanel, LogMonitor } = require('redux-devtools/lib/react')
-      render(
-        <div>
-          <Provider store={store}>
-            <AppContainer />
-          </Provider>
-          <DebugPanel bottom right top>
-            <DevTools monitor={LogMonitor} store={store} />
-          </DebugPanel>
-        </div>
-        , node
-      )
-    }
-
   }, (error, trace) => {
     if(!error){
       store.dispatch(addTrace(trace));
