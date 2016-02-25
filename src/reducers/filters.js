@@ -6,7 +6,11 @@ const initialState = {
     enabled: false
   },
   'Subscriptions' : {
-    operations: ['sub','ready', 'added','removed', 'changed'],
+    operations: ['sub','unsub','nosub','ready'],
+    enabled: true
+  },
+  'Collections' : {
+    operations: ['added','removed', 'changed'],
     enabled: true
   },
   'Methods' : {
