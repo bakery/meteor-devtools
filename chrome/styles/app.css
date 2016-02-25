@@ -29,6 +29,10 @@ ul.network-traces > li {
   padding: 0.5em;
 }
 
+ul.network-traces > li.no-trace {
+  border-bottom: none;
+}
+
 ul.network-traces > li.inbound {
   background-color: #F8F8F8;
 }

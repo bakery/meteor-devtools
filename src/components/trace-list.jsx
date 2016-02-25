@@ -37,7 +37,7 @@ export default React.createClass({
 
   render () {
     const noData = this.props.traces.length === 0 ?
-      <div>No traces yet...</div> : null; 
+      <li className="no-trace">No traces yet...</li> : null; 
     const items = this.props.traces.map(function(item){
       return <TraceItem data={item}/>;
     });
