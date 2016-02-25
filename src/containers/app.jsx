@@ -3,7 +3,7 @@ import TraceList from '../components/trace-list'
 import NotificationSystem from 'react-notification-system'
 import { connect } from 'react-redux'
 import ClearLogsButton from '../components/clear-logs-button'
-import PingPongFilter from '../components/ping-pong-filter' 
+import Filter from '../components/filter' 
 import {clearLogs} from '../actions/traces'
 import {toggleFilter} from '../actions/filters'
 import TraceFilter from '../trace-filter'
@@ -29,7 +29,11 @@ class App extends Component {
       <div>
         <header>
           <ClearLogsButton onClearClick={ () => dispatch(clearLogs())} />
-          <PingPongFilter enabled={ filters.PingPong.enabled } onToggle={ (filter) => dispatch(toggleFilter(filter)) }  />
+          <Filter enabled={ filters.Subscriptions.enabled } name='Subscriptions' onToggle={ (filter) => dispatch(toggleFilter(filter)) } />
+          <Filter enabled={ filters.Collections.enabled } name='Collections' onToggle={ (filter) => dispatch(toggleFilter(filter)) } />
+          <Filter enabled={ filters.Methods.enabled } name='Methods' onToggle={ (filter) => dispatch(toggleFilter(filter)) } />
+          <Filter enabled={ filters.Connect.enabled } name='Connect' onToggle={ (filter) => dispatch(toggleFilter(filter)) } />
+          <Filter enabled={ filters.PingPong.enabled } name='PingPong' onToggle={ (filter) => dispatch(toggleFilter(filter)) } />
           <a href="https://github.com/thebakeryio/meteor-ddp-monitor" target="_blank">
             <i className="fa fa-bug"></i> Bugs, Features, PRs
           </a>          
