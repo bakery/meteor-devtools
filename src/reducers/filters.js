@@ -10,15 +10,15 @@ const initialState = {
     enabled: true
   },
   'Collections' : {
-    operations: ['added','removed', 'changed'],
+    operations: ['added','removed','changed'],
     enabled: true
   },
   'Methods' : {
-    operations: ['method','result', 'updated'],
+    operations: ['method','result','updated'],
     enabled: true
   },
   'Connect' : {
-    operations: ['connect'],
+    operations: ['connect','connected','failed'],
     enabled: false
   }
 };
