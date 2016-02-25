@@ -11,7 +11,7 @@ export default React.createClass({
   render (){
     return (
         <div className="ping-checkbox">
-            <input id="hide-ping" checked={this.props.enabled} onClick={this.onClick} type="checkbox" />
+            <input checked={this.props.enabled} id="hide-ping" onClick={this.onClick} type="checkbox" />
             <label htmlFor="hide-ping">Show Ping/Pong</label>
         </div>
     )
