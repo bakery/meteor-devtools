@@ -14,7 +14,7 @@ Adds DDP traffic monitor to your Chrome Dev Tools
 Running local dev server
 
 ```bash
-npn start
+npm start
 ```
 
 Running tests while developing (with reload)
@@ -23,9 +23,14 @@ Running tests while developing (with reload)
 npm test -- --watch
 ```
 
-Building chrome extension (result in ./chrome)
+Building chrome extension for local testing (result in ./chrome)
 
 ```bash
 npm run chrome
 ```
 
+Building chrome extension for production (result in ./chrome)
+
+```bash
+npm run chrome:build
+```

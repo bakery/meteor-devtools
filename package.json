@@ -13,7 +13,8 @@
   "scripts": {
     "start": "node server.js",
     "test": "jest",
-    "chrome": "npm run test && webpack"
+    "chrome": "npm run test && webpack --config webpack/chrome.dev.js",
+    "chrome:build": "npm run test && webpack --config webpack/chrome.prod.js"
   },
   "jest": {
     "scriptPreprocessor": "./node_modules/babel-jest",
