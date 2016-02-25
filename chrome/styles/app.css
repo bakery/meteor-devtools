@@ -83,3 +83,8 @@ ul.warnings-list > li {
   list-style-type:none;
   padding: 0.5em;
 }
+
+.filter {
+  display: inline-block;
+  margin-left: 10px;
+}

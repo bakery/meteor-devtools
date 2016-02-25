@@ -4,6 +4,18 @@ const initialState = {
   'PingPong' : {
     operations: ['ping','pong'],
     enabled: false
+  },
+  'Subscriptions' : {
+    operations: ['sub','ready', 'added','removed', 'changed'],
+    enabled: true
+  },
+  'Methods' : {
+    operations: ['method','result', 'updated'],
+    enabled: true
+  },
+  'Connect' : {
+    operations: ['connect'],
+    enabled: false
   }
 };
 
