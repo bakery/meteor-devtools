@@ -1,6 +1,9 @@
 import React, { PropTypes } from 'react';
-// import Store from '../trace-store';
 import TraceItem from './trace-item';
+
+let autoscrollToTheBottom = true;
+const body = document.body; 
+const html = document.documentElement;
 
 export default React.createClass({
 
@@ -8,32 +11,23 @@ export default React.createClass({
     traces : PropTypes.array.isRequired
   },
 
-  // componentDidMount () {
-  //   Store.on('change', this.onChange);
-  // },
+  componentDidMount () {
+    // XX: decide if we want to autoscoll to the bottom of the window
+    // when new data arrives - only do it if the person has explicitly 
+    // scrolled to the bottom of the window already
+    window.addEventListener('scroll', (e) => {
+      const height = Math.max(body.scrollHeight, body.offsetHeight, 
+        html.clientHeight, html.scrollHeight, html.offsetHeight);
+      
+      autoscrollToTheBottom = (window.scrollY + window.innerHeight) === height;
+    });
+  },
 
   componentDidUpdate () {
-    var body = document.body, html = document.documentElement;
-    var height = Math.max(body.scrollHeight, body.offsetHeight, 
-      html.clientHeight, html.scrollHeight, html.offsetHeight);
-    var ratio = (window.scrollY + window.innerHeight)/height;
-
-    if(ratio > 0.8) {
+    if (autoscrollToTheBottom) {
       window.scrollTo(0,document.body.scrollHeight);
     }
   },
-
-  // getInitialState () {
-  //   return {
-  //     items : []
-  //   };
-  // },
-
-  // onChange () {
-  //   this.setState({
-  //     items : Store.getState()
-  //   });
-  // },
 
   render () {
     const noData = this.props.traces.length === 0 ?
@@ -41,7 +35,7 @@ export default React.createClass({
     const items = this.props.traces.map(function(item){
       return <TraceItem data={item}/>;
     });
-    
+
     return (
       <ul className="network-traces">
         {items}
