@@ -31,9 +31,9 @@
       talkToExtension('trace', message);
     };
 
-    var oldSend = WebSocket.prototype.send; 
-    WebSocket.prototype.send = function(){
-      oldSend.apply(this,arguments);
+    var oldSend = Meteor.connection._stream.send; 
+    Meteor.connection._stream.send = function(){
+      oldSend.apply(this, arguments);
       grabStackAndTalkToExtension({
         messageJSON : arguments[0],
         isOutbound : true 
