@@ -4,10 +4,8 @@ import { render } from 'react-dom'
 import { Provider } from 'react-redux'
 import Bridge from './bridge';
 import AppContainer from './containers/app'
-import configureStore from './store/store'
+import store from './store'
 import { addTrace, clearLogs } from './actions/traces'
-
-const store = configureStore()
 
 let node = document.querySelector('.app-container');
 let theApp = null;
@@ -20,7 +18,9 @@ try {
     if(!error){
       store.dispatch(addTrace(trace));
     }
-  }, () => store.dispatch(clearLogs()));
+  }, () => {
+    store.dispatch(clearLogs());
+  });
 } catch(e) {
   console.error('global error', e);
 }
