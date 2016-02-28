@@ -1,8 +1,8 @@
-jest.dontMock('../src/ddp-generator');
+jest.dontMock('../src/lib/ddp-generator');
 jest.dontMock('underscore');
 
 const _ = require('underscore');
-const DDPMessageGenerator = require('../src/ddp-generator');
+const DDPMessageGenerator = require('../src/lib/ddp-generator');
 
 let checkMessageFormat = (msg, predicate, numberOfMessages) => {
   if(numberOfMessages){

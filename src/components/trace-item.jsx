@@ -42,7 +42,7 @@ export default React.createClass({
       ? <TraceItemTabs data={this.props.data} />
       : null;
     let timestamp = moment(this.props.data._timestamp).format('HH:mm:ss');
-
+    
     return (
       <li className={itemClass}>
         <span className={iconClass} title={tooltip}></span>

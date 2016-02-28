@@ -6,10 +6,10 @@ import ClearLogsButton from '../components/clear-logs-button'
 import Filter from '../components/filter' 
 import {clearLogs} from '../actions/traces'
 import {toggleFilter} from '../actions/filters'
-import TraceFilter from '../trace-filter'
-import TraceProcessor from '../trace-processor'
-import Warnings from '../warnings'
-import {computeStats} from '../stats'
+import TraceFilter from '../lib/trace-filter'
+import TraceProcessor from '../lib/trace-processor'
+import Warnings from '../lib/warnings'
+import {computeStats} from '../lib/stats'
 import Stats from '../components/stats'
 
 class App extends Component {
@@ -60,13 +60,11 @@ function mapStateToProps(state){
     Warnings.checkForWarnings(traces),
     state.filters
   );
-  const stats = computeStats(traces) 
-  console.error('got stats', stats);
   return {
     traces : filteredTraces,
     filters : state.filters,
-    stats: stats
-  }
+    stats: computeStats(traces)
+  };
 }
 
 export default connect(

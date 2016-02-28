@@ -1,9 +1,9 @@
 jest.autoMockOff();
 
 const _ = require('underscore');
-const DDPGenerator = require('../src/ddp-generator');
-const TraceProcessor = require('../src/trace-processor');
-const Warnings = require('../src/warnings');
+const DDPGenerator = require('../src/lib/ddp-generator');
+const TraceProcessor = require('../src/lib/trace-processor');
+const Warnings = require('../src/lib/warnings');
 
 let runProcessor = (traces, isOutbound=true) => {
   return TraceProcessor.processTraces(
