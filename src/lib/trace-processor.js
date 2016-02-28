@@ -2,6 +2,7 @@ import _ from 'underscore';
 import Groups from './processors/groups';
 import Labels from './processors/labels';
 import Operations from './processors/operations';
+import OperationTypes from './processors/operation-types';
 import Associations from './processors/associations';
 
 module.exports = {
@@ -16,7 +17,8 @@ module.exports = {
 
   processors : [
     new Groups(),
-    new Operations(), 
+    new Operations(),
+    new OperationTypes(), 
     new Associations(),
     new Labels(),
   ]

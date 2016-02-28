@@ -6,9 +6,11 @@ import ClearLogsButton from '../components/clear-logs-button'
 import Filter from '../components/filter' 
 import {clearLogs} from '../actions/traces'
 import {toggleFilter} from '../actions/filters'
-import TraceFilter from '../trace-filter'
-import TraceProcessor from '../trace-processor'
-import Warnings from '../warnings'
+import TraceFilter from '../lib/trace-filter'
+import TraceProcessor from '../lib/trace-processor'
+import Warnings from '../lib/warnings'
+import {computeStats} from '../lib/stats'
+import Stats from '../components/stats'
 
 class App extends Component {
   showGlobalError(msg) {
@@ -24,7 +26,7 @@ class App extends Component {
   }
 
   render() {
-    const { dispatch, filters, traces } = this.props
+    const { dispatch, filters, traces, stats } = this.props
     return (
       <div>
         <header>
@@ -39,6 +41,9 @@ class App extends Component {
           </a>          
         </header>
         <TraceList traces={traces} />
+        <footer>
+          <Stats stats={stats} />
+        </footer>
         <NotificationSystem ref="notificationSystem" />
       </div>
     )
@@ -50,18 +55,16 @@ App.propTypes = {
 }
 
 function mapStateToProps(state){
-
-  let filteredTraces = TraceFilter.filterTraces(
-    Warnings.checkForWarnings(
-      TraceProcessor.processTraces(state.traces)
-    ),
+  const traces = TraceProcessor.processTraces(state.traces);
+  const filteredTraces = TraceFilter.filterTraces(
+    Warnings.checkForWarnings(traces),
     state.filters
   );
-
   return {
     traces : filteredTraces,
-    filters : state.filters
-  }
+    filters : state.filters,
+    stats: computeStats(traces)
+  };
 }
 
 export default connect(

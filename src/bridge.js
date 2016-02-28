@@ -1,4 +1,4 @@
-import DDPMessageGenerator from './ddp-generator';
+import DDPMessageGenerator from './lib/ddp-generator';
 import _ from 'underscore'
 
 let backgroundPageConnection;
