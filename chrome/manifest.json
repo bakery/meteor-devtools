@@ -1,6 +1,6 @@
 {
   "name": "DDP Monitor",
-  "version": "0.9.0",
+  "version": "0.9.5",
   "description": "Monitors DDP traffic of your Meteor app",
   "background" : {
     "scripts": ["scripts/background.js"],
