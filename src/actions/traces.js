@@ -1,5 +1,6 @@
 import * as types from '../constants/action-types'
 import _ from 'underscore'
+import Analytics from '../lib/analytics'
 
 export function addTrace(trace){
   return { 
@@ -15,5 +16,6 @@ export function addTrace(trace){
 }
 
 export function clearLogs(){
+  Analytics.trackEvent('ddp', 'traces:clear');
   return { type: types.CLEAR_LOGS }
 }
