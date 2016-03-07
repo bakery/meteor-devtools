@@ -24,5 +24,4 @@ try {
     store.dispatch(clearLogs());
   });
 } catch(e) {
-  console.error('global error', e);
 }
