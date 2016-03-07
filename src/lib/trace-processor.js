@@ -4,6 +4,7 @@ import Labels from './processors/labels';
 import Operations from './processors/operations';
 import OperationTypes from './processors/operation-types';
 import Associations from './processors/associations';
+import MessageSize from './processors/message-size';
 
 module.exports = {
   processTraces : function(traces){
@@ -21,5 +22,6 @@ module.exports = {
     new OperationTypes(), 
     new Associations(),
     new Labels(),
+    new MessageSize(),
   ]
 };

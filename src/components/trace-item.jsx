@@ -1,5 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
+import prettyBytes from 'pretty-bytes';
 import moment from 'moment';
 import Helpers from '../helpers';
 import TraceItemTabs from './trace-item-tabs';
@@ -42,6 +43,7 @@ export default React.createClass({
       ? <TraceItemTabs data={this.props.data} />
       : null;
     let timestamp = moment(this.props.data._timestamp).format('HH:mm:ss');
+    let prettyMessageSize = prettyBytes(this.props.data.size);
     
     return (
       <li className={itemClass}>
@@ -50,8 +52,9 @@ export default React.createClass({
         <span className="op-label" onClick={this.onExpandToggle}>{compactJSONString}
           &nbsp;<i className={toggleIconClass}></i>
         </span>
-        <span className="timestamp">
-          {timestamp}
+        <span className="message-inline-details">
+          {prettyMessageSize}&nbsp;
+          <i className="fa fa-clock-o"></i>&nbsp;{timestamp}
         </span>
         {tabs}
       </li>

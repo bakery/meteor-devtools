@@ -10,6 +10,12 @@ module.exports = {
       outboundMessages: _.reduce(traces, (memo, trace) => {
         return memo + (trace.isOutbound ? 1 : 0);
       }, 0),
+      inboundMessagesSize : _.reduce(traces, (memo, trace) => {
+        return memo + (!trace.isOutbound ? trace.size : 0);
+      }, 0),
+      outboundMessagesSize: _.reduce(traces, (memo, trace) => {
+        return memo + (trace.isOutbound ? trace.size : 0);
+      }, 0),
       messageTypes: {
         methodCalls : _.reduce(traces, (cnt, trace) => {
           return cnt + (trace.operation === 'method' ? 1 : 0);

@@ -50,7 +50,7 @@ ul.network-traces > li .op-label {
   padding:0.2em;
   word-break:break-all;
 }
-ul.network-traces > li .timestamp {
+ul.network-traces > li .message-inline-details {
   float: right;
   color: #8C8C8C;
 }

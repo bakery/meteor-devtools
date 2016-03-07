@@ -9,6 +9,7 @@ export default {
     label : React.PropTypes.string,
     operation : React.PropTypes.string,
     request : React.PropTypes.object,
-    warnings : React.PropTypes.array
+    warnings : React.PropTypes.array,
+    size : React.PropTypes.number
   }).isRequired
 };
