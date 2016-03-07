@@ -23,9 +23,20 @@ class App extends Component {
 
   componentDidMount() {
     this._notificationSystem = this.refs.notificationSystem;
+    window.onerror = (message) => {
+      this.showGlobalError(message);
+    };
   }
 
   render() {
+    var notificaitonStyle = {
+      NotificationItem: {
+        DefaultStyle: {
+          margin: '10px 5px 40px 1px'
+        }
+      }
+    };
+
     const { dispatch, filters, traces, stats } = this.props
     return (
       <div>
@@ -44,7 +55,7 @@ class App extends Component {
         <footer>
           <Stats stats={stats} />
         </footer>
-        <NotificationSystem ref="notificationSystem" />
+        <NotificationSystem ref="notificationSystem" style={notificaitonStyle} />
       </div>
     )
   }

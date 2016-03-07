@@ -7,7 +7,7 @@ export default React.createClass({
     enabled : PropTypes.bool.isRequired,
     name : PropTypes.string
   },
-  onClick (event){
+  onChange (event){
     this.props.onToggle(this.props.name);
   },
   render (){
@@ -15,10 +15,10 @@ export default React.createClass({
     let filterId = 'hide-'+(this.props.name).toLowerCase();
 
     return (
-        <div className={filterClass}>
-            <input checked={this.props.enabled} id={filterId} onClick={this.onClick} type="checkbox" />
-            <label htmlFor={filterId}>Show {this.props.name}</label>
-        </div>
+      <div className={filterClass}>
+        <input checked={this.props.enabled} id={filterId} onChange={this.onChange} type="checkbox" />
+        <label htmlFor={filterId}>Show {this.props.name}</label>
+      </div>
     )
   }
 });
