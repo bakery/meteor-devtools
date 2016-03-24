@@ -1,10 +1,10 @@
 {
   "name": "meteor-dev-tools",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Meteor Dev Tools extension",
   "repository": {
     "type": "git",
-    "url": "git://github.com/MeteorDevTools/meteor-dev-tools.git"
+    "url": "git://github.com/thebakeryio/meteor-ddp-monitor.git"
   },
   "keywords": [
     "meteor",
@@ -29,9 +29,9 @@
   "author": "The Bakery",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/MeteorDevTools/meteor-dev-tools/issues"
+    "url": "https://github.com/thebakeryio/meteor-ddp-monitor/issues"
   },
-  "homepage": "https://github.com/MeteorDevTools/meteor-dev-tools",
+  "homepage": "https://github.com/thebakeryio/meteor-ddp-monitor",
   "devDependencies": {
     "babel-eslint": "^5.0.0",
     "babel-jest": "^9.0.1",
