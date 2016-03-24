@@ -1,5 +1,5 @@
 {
-  "name": "DDP Monitor",
+  "name": "Meteor Devtools",
   "version": "1.0.0",
   "description": "Monitors DDP traffic of your Meteor app",
   "background" : {
