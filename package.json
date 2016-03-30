@@ -1,7 +1,7 @@
 {
-  "name": "ddpmonitor",
-  "version": "1.0.0",
-  "description": "Monitor Meteor DDP Traffic in Chrome",
+  "name": "meteor-dev-tools",
+  "version": "1.1.0",
+  "description": "Meteor Dev Tools extension",
   "repository": {
     "type": "git",
     "url": "git://github.com/thebakeryio/meteor-ddp-monitor.git"
@@ -13,8 +13,8 @@
   "scripts": {
     "start": "node server.js",
     "test": "jest",
-    "chrome": "npm run test && webpack --config webpack/chrome.dev.js",
-    "chrome:build": "npm run test && webpack --config webpack/chrome.prod.js"
+    "chrome": "npm run test && webpack --config webpack/chrome.dev.js && webpack --config webpack/chrome.inject.js",
+    "chrome:build": "npm run test && webpack --config webpack/chrome.prod.js && webpack --config webpack/chrome.inject.js"
   },
   "jest": {
     "scriptPreprocessor": "./node_modules/babel-jest",
@@ -31,7 +31,7 @@
   "bugs": {
     "url": "https://github.com/thebakeryio/meteor-ddp-monitor/issues"
   },
-  "homepage": "https://chrome.google.com/webstore/detail/ddp-monitor/ippapidnnboiophakmmhkdlchoccbgje",
+  "homepage": "https://github.com/thebakeryio/meteor-ddp-monitor",
   "devDependencies": {
     "babel-eslint": "^5.0.0",
     "babel-jest": "^9.0.1",
@@ -48,15 +48,18 @@
   },
   "dependencies": {
     "classnames": "^2.2.0",
+    "error-stack-parser": "^1.3.3",
+    "immutable": "^3.7.6",
     "moment": "^2.11.2",
+    "object-assign": "^4.0.1",
     "pretty-bytes": "^3.0.1",
     "react": "^0.14.7",
     "react-dom": "^0.14.7",
     "react-json-tree": "^0.5.3",
     "react-notification-system": "^0.2.5",
     "react-redux": "^4.4.0",
-    "react-tabs": "^0.5.3",
     "redux": "^3.3.1",
+    "slugify": "^0.1.1",
     "underscore": "^1.8.3"
   }
 }

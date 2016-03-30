@@ -1,7 +1,7 @@
 {
-  "name": "DDP Monitor",
-  "version": "1.0.0",
-  "description": "Monitors DDP traffic of your Meteor app",
+  "name": "Meteor Devtools",
+  "version": "1.1.0",
+  "description": "Developer tools for Meteor",
   "background" : {
     "scripts": ["scripts/background.js"],
     "persistent": false
