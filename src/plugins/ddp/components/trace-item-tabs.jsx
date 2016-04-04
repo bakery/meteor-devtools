@@ -58,7 +58,7 @@ export default React.createClass({
     if(this.props.data.stackTrace){
       const stackTrace = this.props.data.stackTrace.map(function(st){
 
-        let shortUrl = st.fileName;
+        let shortUrl = st.fileName || '<anonymous>';
         let functionName = st.functionName ?
           st.functionName :
           '(anonymous function)';
