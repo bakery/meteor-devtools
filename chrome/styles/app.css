@@ -3,6 +3,8 @@ html, body {
   padding:0;
   margin:0;
   height: 100%;
+  font-family: 'Lucida Grande', sans-serif;
+  font-size: 12px;
 }
 
 .app-container {
@@ -14,18 +16,29 @@ html, body {
 }
 
 .app-tabs.react-tabs {
-  margin: 0;
   height: 100%;
   overflow: hidden;
+  margin: 0;
 }
 
 .app-tabs.react-tabs > ul {
-  margin: 0px 0 0 -9px;
+  margin: 0;
+  background-color: #f3f3f3;
+}
+
+.ReactTabs__Tab--selected {
+  background-color: white !important;
 }
 
 .app-tabs.react-tabs > ul > li {
   margin-left: 0px !important; 
-  bottom: 0;
+  margin-top: 2px;
+  bottom: 0; 
+  border-radius: 0 !important;
+}
+
+.react-tabs > ul > li:first-child {
+  margin-left: 5px !important;
 }
 
 .app-tab-panel {

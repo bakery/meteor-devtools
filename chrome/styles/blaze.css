@@ -17,6 +17,11 @@
   overflow-y: scroll;
 }
 
+.blaze-inspector > section > header {
+  font-family: 'Lucida Grande', sans-serif !important;
+  font-size: 12px !important;
+}
+
 .blaze-inspector > section .collapse-toggler {
   margin-right: 3px;
 }

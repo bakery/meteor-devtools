@@ -66,8 +66,8 @@ class App extends Component {
     return (
       <div className="blaze-inspector">
         <section>
-          <div style={{borderBottom:'solid 1px #ccc', marginBottom: '11px'}}>👷 Yo! This stuff here is pretty experimental. Let us know what you think and if it works ->
-          &nbsp;<a href="https://twitter.com/bakeryhq" target="_blank">Talk to us</a></div>
+          <header style={{borderBottom:'solid 1px #ccc', marginBottom: '11px'}}>👷 Yo! This stuff here is pretty experimental. Let us know what you think and if it works ->
+          &nbsp;<a href="https://twitter.com/bakeryhq" target="_blank">Talk to us</a></header>
           { rootNode ? 
             <BlazeTreeView rootNode={rootNode}
             getChildNodes={this.props.getChildNodes}

@@ -6,7 +6,7 @@
 }
 
 header, footer {
-  padding: 0.25em;
+  padding: 0.4em;
 }
 
 header {
@@ -66,21 +66,6 @@ ul.network-traces > li.warning {
 .ping-checkbox {
   display: inline-block;
   margin-left: 20px;
-}
-
-.react-tabs {
-  margin-left: -0.5em;
-  margin-right: -0.5em;
-  margin-top: 0.5em;
-}
-
-.react-tabs > ul > li {
-  border-radius: 0 !important;
-  background-color: inherit !important;
-}
-
-.react-tabs > ul > li:first-child {
-  margin-left: 9px !important;
 }
 
 .stack-trace {
