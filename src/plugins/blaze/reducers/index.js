@@ -10,10 +10,8 @@ export default {
   blazeTree (state = Immutable.fromJS({}), action) {
     switch(action.type){
       case SET_BLAZE_TREE:
-        console.error('setting state with immutable', action.data);
         return Immutable.fromJS(action.data);
       case TOGGLE_BLAZE_NODE_COLLAPSED:
-        console.error('toggling collapse for', action.nodeId);
         return state.updateIn([action.nodeId, 'isExpanded'], ie => !ie);
       case CHANGE_BLAZE_NODE_SELECTION:
         // get currently selected blaze node
@@ -23,9 +21,6 @@ export default {
             currentlySelectedNode = node;
           }
         });
-
-        console.error('currently selected node', currentlySelectedNode);
-        console.error('toggling selection for', action.nodeId);
         return state.withMutations((nodes) => {
           if (currentlySelectedNode) {
             nodes.updateIn([currentlySelectedNode.get('_id'), 'isSelected'],
