@@ -45,3 +45,13 @@ html, body {
   overflow-y: scroll;
   height: 100%;
 }
+
+.gh-link {
+  list-style: none;
+  float: right;
+  padding: 6px 6px 0 0;
+}
+
+.gh-link > a {
+  text-decoration: none;
+}

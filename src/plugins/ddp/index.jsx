@@ -100,10 +100,7 @@ class App extends Component {
           <Filter enabled={ filters.Collections.enabled } name='Collections' onToggle={ (filter) => dispatch(toggleFilter(filter)) } />
           <Filter enabled={ filters.Methods.enabled } name='Methods' onToggle={ (filter) => dispatch(toggleFilter(filter)) } />
           <Filter enabled={ filters.Connect.enabled } name='Connect' onToggle={ (filter) => dispatch(toggleFilter(filter)) } />
-          <Filter enabled={ filters.PingPong.enabled } name='PingPong' onToggle={ (filter) => dispatch(toggleFilter(filter)) } />
-          <a href="https://github.com/thebakeryio/meteor-ddp-monitor" target="_blank">
-            <i className="fa fa-bug"></i> Bugs, Features, PRs
-          </a>          
+          <Filter enabled={ filters.PingPong.enabled } name='PingPong' onToggle={ (filter) => dispatch(toggleFilter(filter)) } />        
         </header>
         <section onScroll={this.onScroll}>
           <TraceList traces={traces} />

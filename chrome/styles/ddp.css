@@ -20,11 +20,6 @@ footer {
   height: 45px;
 }
 
-header > a {
-  float:right;
-  text-decoration: none;
-}
-
 .ddp-monitor > section {
   flex:1;
   overflow: scroll;

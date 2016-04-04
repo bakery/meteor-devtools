@@ -49,6 +49,11 @@ class App extends Component {
         <Tabs className="app-tabs">
           <TabList>
             {tabs}
+            <li className="gh-link">
+              <a href="https://github.com/thebakeryio/meteor-ddp-monitor" target="_blank">
+                <i className="fa fa-bug"></i> Bugs, Features, PRs
+              </a>
+            </li>
           </TabList>
           {tabPanels}
         </Tabs>  
