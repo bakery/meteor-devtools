@@ -11,6 +11,7 @@ import BlazeTreeView from './components/tree'
 import PropertiesView from './components/props'
 import _ from 'underscore';
 import Analytics from '../../common/analytics';
+import './blaze.css';
 
 let dispatch = null;
 
