@@ -3,7 +3,7 @@ import Highlighter from './highlighter';
 var hl;
 
 const __getBlazeData = (callback) => {
-  if (!Blaze) {
+  if (typeof Blaze === 'undefined') {
     return;
   }
 
