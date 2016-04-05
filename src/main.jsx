@@ -9,6 +9,7 @@ import _ from 'underscore';
 import Analytics from './common/analytics';
 import slugify from 'slugify';
 import Bridge from './common/bridge';
+import './common/styles/app.css';
 
 class App extends Component {
   showGlobalError(msg) {

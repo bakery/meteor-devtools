@@ -3,7 +3,6 @@ var _ = require('underscore');
 
 const srcPath = path.join(__dirname, '../src/');
 
-
 module.exports = function(overrides){
   return _.extend({
     entry: [
@@ -15,9 +14,14 @@ module.exports = function(overrides){
           test: /\.js/,
           loaders: ['babel'],
           include: srcPath
+        },
+        {
+          test: /\.css$/,
+          loader: 'style-loader!css-loader!postcss-loader'
         }
       ]
     },
+    postcss: () => [require('precss')],
     resolve: {
       extensions: ['', '.js', '.jsx']
     },

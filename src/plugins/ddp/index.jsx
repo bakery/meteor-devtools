@@ -14,6 +14,7 @@ import { toggleFilter } from './actions/filters'
 import _ from 'underscore';
 import DDPMessageGenerator from './lib/ddp-generator';
 import Analytics from '../../common/analytics';
+import './ddp.css';
 
 let autoscrollToTheBottom = true;
 const _getScrollableSectionEl = () => {
