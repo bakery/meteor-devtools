@@ -1,5 +1,6 @@
 import ddpInject from '../plugins/ddp/inject';
 import blazeInject from '../plugins/blaze/inject';
+import miniMongoInject from '../plugins/minimongo/inject';
 
 (() => {
   const talkToExtension = (eventType, data) => {
@@ -15,7 +16,7 @@ import blazeInject from '../plugins/blaze/inject';
     if (document.readyState === 'complete' || isMeteorDefined) {
       clearInterval(readyStateCheckInterval);
       if(isMeteorDefined){
-        const plugins = [ddpInject, blazeInject];
+        const plugins = [ddpInject, blazeInject, miniMongoInject];
         for(var i=0; i<plugins.length; i++){
           plugins[i].setup.call(this, talkToExtension);
         }

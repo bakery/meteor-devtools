@@ -5,6 +5,8 @@ import DDPReducers from './ddp/reducers';
 import DDPMonitor from './ddp';
 import BlazeReducers from './blaze/reducers';
 import BlazeInspector from './blaze';
+import MiniMongoExplorer from './minimongo';
+import MiniMongoReducers from './minimongo/reducers';
 
 let __store = null;
 const plugins = [
@@ -18,6 +20,11 @@ const plugins = [
     reducers: BlazeReducers,
     component: <BlazeInspector />,
   },
+  {
+    name: 'MiniMongo Explorer',
+    reducers: MiniMongoReducers,
+    component: <MiniMongoExplorer />
+  }
 ];
 
 module.exports = {
