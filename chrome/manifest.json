@@ -1,6 +1,6 @@
 {
   "name": "Meteor DevTools",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "Developer tools for Meteor",
   "background" : {
     "scripts": ["scripts/background.js"],
