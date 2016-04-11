@@ -25,6 +25,7 @@ footer {
 .ddp-monitor > section {
   flex:1;
   overflow: scroll;
+  padding-bottom: 59px;
 }
 
 .ddp-monitor > header {
