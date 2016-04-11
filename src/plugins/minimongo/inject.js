@@ -1,11 +1,9 @@
-import _ from 'underscore';
-
 const __getMinimongoCollections = (callback) => {
   let data = {};
-  _.each(Meteor.connection._mongo_livedata_collections,
-    (collection) => {
-      return data[collection.name] = collection.find().fetch();
-    });
+  const collections = Meteor.connection._mongo_livedata_collections;
+  for(let i in collections) {
+    data[collections[i].name] = collections[i].find().fetch();
+  }
   callback && callback('minimongo-explorer', data);
 };
 
@@ -13,9 +11,10 @@ module.exports = {
   setup : (talkToExtension) => {
     Tracker.autorun(function(){
       // setup reactivity
-      _.each(Meteor.connection._mongo_livedata_collections, function(c){
-        c.find();
-      });
+      const collections = Meteor.connection._mongo_livedata_collections;
+      for(let i in collections) {
+        collections[i].find();
+      }
       __getMinimongoCollections(talkToExtension)
     });
   }

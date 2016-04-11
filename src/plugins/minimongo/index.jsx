@@ -5,8 +5,6 @@ import JSONTree from 'react-json-tree';
 import {
   setMinimongoCollections 
 } from './actions';
-import _ from 'underscore';
-
 
 let dispatch = null;
 
