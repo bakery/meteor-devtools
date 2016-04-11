@@ -8,7 +8,7 @@ export default React.createClass({
   render (){
     if(this.props.rootNode) {
       return (
-        <div>
+        <div className="blaze-tree">
           <Node key={this.props.rootNode.get('_id')} 
                 onToggleCollapse={this.props.onToggleCollapse} 
                 getChildNodes={this.props.getChildNodes}

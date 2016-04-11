@@ -73,7 +73,7 @@ class App extends Component {
             changeBlazeNodeSelection={changeNodeSelection}
             onToggleCollapse={(nodeId) => dispatch(toggleNodeCollapse(nodeId))} 
             onHover={(nodeId, isHovered) => dispatch(changeNodeHover(nodeId, isHovered)) }/>
-            : <div>Looking for signs of Blaze...</div> 
+            : <div className="no-blaze">Looking for signs of Blaze...</div> 
           }
         </section>
         <aside>
