@@ -5,6 +5,8 @@ import JSONTree from 'react-json-tree';
 import {
   setMinimongoCollections 
 } from './actions';
+import Immutable from 'immutable';
+import './minimongo.css';
 
 let dispatch = null;
 
@@ -21,7 +23,10 @@ class App extends Component {
 
     if(chrome && chrome.devtools) {
       Bridge.registerMessageCallback(onNewMessage);
-      // Bridge.registerPageReloadCallback(onPageReload);
+      Bridge.sendMessageToThePage({
+        source: 'minimongo-explorer',
+        event: 'get-minimongo-collections'
+      });
     } else {
       var fakeCollections = require('./fake');
       onNewMessage.call(this, null, {
@@ -32,6 +37,7 @@ class App extends Component {
   }
 
   componentWillUnmount() {
+    Bridge.removeMessageCallback(onNewMessage);
   }
 
   _renderData (data) {
@@ -43,9 +49,12 @@ class App extends Component {
   }
 
   render() {
+    const data = this.props.minimongoCollections;
+    const noData = Immutable.is(data, Immutable.fromJS({}));
     return (
       <div className="minimongo-explorer">
-          {this._renderData(this.props.minimongoCollections.toJS())}
+      { noData ? <div className="no-minimongo">No MiniMongo collections...</div>
+      : this._renderData(data.toJS()) }
       </div>
     )
   }
