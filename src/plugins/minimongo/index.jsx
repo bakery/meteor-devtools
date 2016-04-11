@@ -6,6 +6,7 @@ import {
   setMinimongoCollections 
 } from './actions';
 import Immutable from 'immutable';
+import Analytics from '../../common/analytics';
 import './minimongo.css';
 
 let dispatch = null;
