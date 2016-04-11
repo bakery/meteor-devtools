@@ -12,7 +12,7 @@
   overflow: scroll;
   font-size: 11px !important;
   font-family: Menlo, monospace;
-  padding: 6px 12px 35px;
+  padding: 6px 0 0 0;
   line-height: 16px;
   overflow-y: scroll;
 }
@@ -28,6 +28,7 @@
 
 .blaze-inspector > section .tag-wrap {
   color: rgb(168, 148, 166);
+  padding-left: 14px;
 }
 
 .blaze-inspector > section .tag-name {
