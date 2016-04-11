@@ -5,7 +5,7 @@
 [![devDependency Status](https://david-dm.org/thebakeryio/meteor-devtools/dev-status.svg)](https://david-dm.org/thebakeryio/meteor-devtools#info=devDependencies)
 [![ES-2015](https://img.shields.io/badge/ES-2015-brightgreen.svg)](https://babeljs.io/docs/learn-es2015/)
 
-Meteor Devtools (MD) is an extension for Chrome Developer Tools that makes the process of developing Meteor apps even more enjoyable. It also allows you to look under the hood of existing applications and learn how they are built. MD includes a plugin framework and currrently comes with 2 plugins: DDP Monitor and Blaze Inspector. You can [install](https://chrome.google.com/webstore/detail/meteor-devtools/ippapidnnboiophakmmhkdlchoccbgje) it from Chrome Web Store.
+Meteor Devtools (MD) is an extension for Chrome Developer Tools that makes the process of developing Meteor apps even more enjoyable. It also allows you to look under the hood of existing applications and learn how they are built. MD includes a plugin framework and currrently comes with 3 plugins: DDP Monitor, Blaze Inspector and MiniMongo Explorer. You can [install](https://chrome.google.com/webstore/detail/meteor-devtools/ippapidnnboiophakmmhkdlchoccbgje) it from Chrome Web Store.
 
 ## Development
 

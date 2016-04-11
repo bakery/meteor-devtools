@@ -1,0 +1,1 @@
+export const SET_MINIMONGO_COLLECTIONS = 'set_minimongo_collections';
