@@ -2,7 +2,9 @@ const __getMinimongoCollections = (callback) => {
   let data = {};
   const collections = Meteor.connection._mongo_livedata_collections;
   for(let i in collections) {
-    data[collections[i].name] = collections[i].find().fetch();
+    if(collections[i].name){
+      data[collections[i].name] = collections[i].find().fetch();
+    } 
   }
   callback && callback('minimongo-explorer', data);
 };
