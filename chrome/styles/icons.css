@@ -82,3 +82,7 @@
 .client.connect {
     background-image: url('../icons/client-connect.png');
 }
+
+.toolbar-glyph {
+    -webkit-mask-image: url('../icons/toolbarButtonGlyphs_2x.png');
+}

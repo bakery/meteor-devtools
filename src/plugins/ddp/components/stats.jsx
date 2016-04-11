@@ -18,15 +18,15 @@ export default React.createClass({
       <div>
         <span title="inbound messages">
           <i className="fa fa-arrow-down"></i>&nbsp;
-          <strong>{this.props.stats.inboundMessages}/{inboundMessagesSize}</strong>&nbsp;
-        </span>
+          <span>{inboundMessagesSize}</span>&nbsp;
+        </span>&nbsp;
         <span title="outbound messages">
           <i className="fa fa-arrow-up"></i>&nbsp;
-          <strong>{this.props.stats.outboundMessages}/{outboundMessagesSize}</strong>
-        </span>&nbsp;|&nbsp;
-        <strong title="collection operations">collection ops: {this.props.stats.messageTypes.collections}</strong>&nbsp;|&nbsp;
-        <strong title="method calls">method calls: {this.props.stats.messageTypes.methodCalls}</strong>&nbsp;|&nbsp;
-        <strong title="subscriptions">subs: {this.props.stats.messageTypes.subscriptions}</strong>
+          <span>{outboundMessagesSize}</span>
+        </span>&ensp;|&ensp;
+        <span title="collection operations">collection ops: {this.props.stats.messageTypes.collections}</span>&ensp;|&ensp;
+        <span title="method calls">method calls: {this.props.stats.messageTypes.methodCalls}</span>&ensp;|&ensp;
+        <span title="subscriptions">subs: {this.props.stats.messageTypes.subscriptions}</span>
       </div>
     )
   }

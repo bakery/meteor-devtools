@@ -9,7 +9,10 @@ export default React.createClass({
   },
   render (){
     return (
-      <button onClick={this.onClick}><i className="fa fa-trash"></i> Clear</button>
+      <button onClick={this.onClick} className="toolbar-item clear-traces">
+        <div className="toolbar-glyph"></div>
+        <div className="tooltip">Clear Traces</div>
+      </button>
     )
   }
 });

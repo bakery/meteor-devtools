@@ -47,15 +47,17 @@ export default React.createClass({
     
     return (
       <li className={itemClass}>
-        <span className={iconClass} title={tooltip}></span>
-        <strong>{this.props.data.label}</strong>&nbsp;
-        <span className="op-label" onClick={this.onExpandToggle}>{compactJSONString}
-          &nbsp;<i className={toggleIconClass}></i>
-        </span>
-        <span className="message-inline-details">
-          {prettyMessageSize}&nbsp;
-          <i className="fa fa-clock-o"></i>&nbsp;{timestamp}
-        </span>
+        <div className="trace-content">
+          <span className={iconClass} title={tooltip}></span>
+          <strong>{this.props.data.label}</strong>&nbsp;
+          <span className="op-label" onClick={this.onExpandToggle}>{compactJSONString}
+            &nbsp;<i className={toggleIconClass}></i>
+          </span>
+          <span className="message-inline-details">
+            <span><i className="fa fa-clock-o"></i>&nbsp;{timestamp}</span>
+            <span>{prettyMessageSize}</span>
+          </span>
+        </div>
         {tabs}
       </li>
     )

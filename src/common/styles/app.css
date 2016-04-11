@@ -60,3 +60,7 @@ html, body {
     text-decoration: none;  
   }
 }
+
+input[type="radio" i], input[type="checkbox" i] {
+  margin: 3px 0.5ex;
+}
