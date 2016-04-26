@@ -1,3 +1,53 @@
 .no-minimongo {
   margin: 0.5em;
 }
+
+.minimongo{
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+}
+
+.minimongo > aside {
+    flex: 1;
+    max-width: 25%;
+    overflow: hidden;
+    border-right: solid 1px #ccc;
+    overflow-y: scroll;
+}
+
+.minimongo > section {
+    flex: 3;
+    overflow: hidden;
+}
+
+.minimongo > section ul {
+    margin: 4px 0;
+}
+
+.minimongo-content-header {
+    text-align: center;
+    background-color: #f3f3f3;
+    padding: 5px 0;
+    font-weight: bold;
+    border-bottom: solid 1px #ccc;
+}
+
+.minimongo-collections {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.minimongo-collections li {
+    padding: 5px 10px;
+}
+
+.minimongo-collections li:hover {
+    cursor: pointer;
+}
+
+.minimongo-collections .selected {
+    color: white;
+    background-color: rgb(56, 121, 217)
+}
