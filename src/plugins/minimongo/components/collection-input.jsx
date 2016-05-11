@@ -20,9 +20,10 @@ export default React.createClass({
 
     return (
       <textarea 
-        className={inputClass} 
+        className={inputClass}
         onChange={this.handleChange}
         rows={1}
+        spellCheck={false}
         value={this.props.query}
       />
     )
