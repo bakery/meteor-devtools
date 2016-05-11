@@ -143,7 +143,7 @@ export default connect((state) => {
     getQuery: () => {
       return state.minimongoCollectionQuery.
         get(state.minimongoCurrentSelection) ||
-        '{ query: {}, fields: {}, sort: {}}';
+        '{ query: { }, fields: { }, sort: { } }';
     }
   };
 })(App)
