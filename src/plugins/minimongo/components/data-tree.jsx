@@ -13,11 +13,12 @@ export default React.createClass({
 
     const theme = {
       tree: {
-        backgroundColor: 'transparent'
+        backgroundColor: 'transparent',
+        fontSize: '1em'
       },
       arrow: ({ style }, type, expanded) => ({
         style: Object.assign(style, {
-            marginTop: 2,
+            marginTop: 2
         })
       }),
     };

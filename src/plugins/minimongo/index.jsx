@@ -58,7 +58,8 @@ class App extends Component {
       }
 
       const query = this.props.minimongoCollectionQuery.
-        get(this.props.minimongoCurrentSelection);
+        get(this.props.minimongoCurrentSelection) || 
+        '{ query: { }, fields: { }, sort: { } }';
       const matcher = safeDocumentQuery(query); 
       const projector = safeDocumentProjector(query);
       const sorter = safeDocumentSorter(query);
@@ -76,7 +77,7 @@ class App extends Component {
             collectionName={currentSelection}
             error={error}
             onChange={changeQuery}
-            query={this.props.getQuery()}
+            query={query}
           />
           <DataTree data={queryResult} />
         </div>
@@ -112,7 +113,6 @@ class App extends Component {
 }
 
 App.propTypes = {
-  getQuery : PropTypes.func.isRequired,
   getCollections : PropTypes.func.isRequired,
   getItemsForCollection : PropTypes.func.isRequired,
   minimongoCurrentSelection : PropTypes.string,
@@ -140,10 +140,5 @@ export default connect((state) => {
       const data = state.minimongoCollections.toJS();
       return data[collection] || [];
     },
-    getQuery: () => {
-      return state.minimongoCollectionQuery.
-        get(state.minimongoCurrentSelection) ||
-        '{ query: { }, fields: { }, sort: { } }';
-    }
   };
 })(App)

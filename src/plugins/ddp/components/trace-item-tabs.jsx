@@ -20,7 +20,8 @@ export default React.createClass({
   _renderMessage (data) {
     const theme = {
       tree: {
-        backgroundColor: 'transparent'
+        backgroundColor: 'transparent',
+        fontSize: '1em'
       },
       arrow: ({ style }, type, expanded) => ({
         style: Object.assign(style, {
