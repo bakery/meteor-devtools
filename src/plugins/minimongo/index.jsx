@@ -1,14 +1,19 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import Bridge from '../../common/bridge';
-import JSONTree from 'react-json-tree';
 import {
   setMinimongoCollections, 
-  changeCollectionSelection 
+  changeCollectionSelection,
+  setCollectionQuery
 } from './actions';
 import Immutable from 'immutable';
 import Analytics from '../../common/analytics';
 import CollectionList from './components/collection-list';
+import CollectionInput from './components/collection-input';
+import DataTree from './components/data-tree';
+import safeDocumentQuery from './lib/doc-matcher';
+import safeDocumentSorter from './lib/doc-sorter';
+import safeDocumentProjector from './lib/doc-projector';
 import './minimongo.css';
 
 let dispatch = null;
@@ -45,31 +50,37 @@ class App extends Component {
     Bridge.removeMessageCallback(onNewMessage);
   }
 
-  _renderData (data) {
-    if(typeof(data) !== 'object'){
-      return;
-    }
-    let getStyle = (type, expanded) => ({ marginTop: 4 });
-    let getItemString = (type, data, itemType, itemString) => {
-      return (<span> {data._id} {itemType} {itemString} </span>);
-    };
-    if(Object.keys(data).length === 0){
-      return <div className="no-minimongo">No items in this collection.</div>
-    } else {
-      return (
-        <JSONTree 
-        data={data} 
-        getArrowStyle={getStyle} 
-        getItemString={getItemString} 
-        hideRoot={true}
-        />);
-    }
-  }
-
-  _sectionHeader (currentSelection) {
+  _collectionPanel (currentSelection) {
     if(currentSelection){
-      console.log(currentSelection);
-      return <div className="minimongo-content-header">{currentSelection}</div>
+      
+      const changeQuery = (collectionName, query) => {
+        dispatch(setCollectionQuery(collectionName, query));
+      }
+
+      const query = this.props.minimongoCollectionQuery.
+        get(this.props.minimongoCurrentSelection);
+      const matcher = safeDocumentQuery(query); 
+      const projector = safeDocumentProjector(query);
+      const sorter = safeDocumentSorter(query);
+      const error = matcher.error || projector.error || sorter.error;
+      const collection = this.props.getItemsForCollection();
+      const queryResult = collection
+        .filter(matcher.action)
+        .map(projector.action)
+        .sort(sorter.action);
+
+      return (
+        <div>
+          <div className="minimongo-header">{currentSelection}</div>
+          <CollectionInput
+            collectionName={currentSelection}
+            error={error}
+            onChange={changeQuery}
+            query={this.props.getQuery()}
+          />
+          <DataTree data={queryResult} />
+        </div>
+      )
     } else {
       return <div className="no-minimongo">No collections yet...</div>
     }
@@ -77,7 +88,6 @@ class App extends Component {
 
   render() {
     const data = this.props.minimongoCollections;
-    const collectionItems = this.props.getItemsForCollection(this.props.minimongoCurrentSelection);
     const noData = Immutable.is(data, Immutable.fromJS({}));
     const changeSelection = (collectionName) => {
       dispatch(changeCollectionSelection(collectionName));
@@ -86,6 +96,7 @@ class App extends Component {
     return (
       <div className="minimongo">
         <aside>
+          <div className="minimongo-header">Collections</div>
           <CollectionList 
           changeCollectionSelection={changeSelection} 
           collections={this.props.getCollections()}
@@ -93,18 +104,27 @@ class App extends Component {
           />
         </aside>
         <section>
-          { this._sectionHeader(this.props.minimongoCurrentSelection) }
-          { this._renderData(collectionItems) } 
+          { this._collectionPanel(this.props.minimongoCurrentSelection) }
         </section> 
       </div>
     )
   }
 }
 
+App.propTypes = {
+  getQuery : PropTypes.func.isRequired,
+  getCollections : PropTypes.func.isRequired,
+  getItemsForCollection : PropTypes.func.isRequired,
+  minimongoCurrentSelection : PropTypes.string,
+  minimongoCollectionQuery: PropTypes.object,
+  minimongoCollections: PropTypes.object
+}
+
 export default connect((state) => {
   return {
     minimongoCollections: state.minimongoCollections,
     minimongoCurrentSelection: state.minimongoCurrentSelection,
+    minimongoCollectionQuery: state.minimongoCollectionQuery,
     getCollections: () => {
       const data = state.minimongoCollections.toJS();
       const keys = Object.keys(data);
@@ -115,9 +135,15 @@ export default connect((state) => {
         }
       });
     },
-    getItemsForCollection: (collection) => {
+    getItemsForCollection: () => {
+      const collection = state.minimongoCurrentSelection;
       const data = state.minimongoCollections.toJS();
-      return data[collection];
+      return data[collection] || [];
+    },
+    getQuery: () => {
+      return state.minimongoCollectionQuery.
+        get(state.minimongoCurrentSelection) ||
+        '{ query: {}, fields: {}, sort: {}}';
     }
   };
 })(App)

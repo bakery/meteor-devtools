@@ -25,7 +25,7 @@
     margin: 4px 0;
 }
 
-.minimongo-content-header {
+.minimongo-header {
     text-align: center;
     background-color: #f3f3f3;
     padding: 5px 0;
@@ -50,4 +50,17 @@
 .minimongo-collections .selected {
     color: white;
     background-color: rgb(56, 121, 217)
+}
+
+.minimongo-input {
+    width: 100%;
+    padding: 5px 2px;
+    outline: none;
+    font-size: 12px;
+}
+
+.minimongo-input.error {
+    background-color: #f2dede;
+    border-color: #ebccd1;
+    color: #a94442;
 }

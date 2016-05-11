@@ -1,6 +1,7 @@
 import { 
   SET_MINIMONGO_COLLECTIONS,
-  CHANGE_COLLECTION_SELECTION
+  CHANGE_COLLECTION_SELECTION,
+  SET_COLLECTION_QUERY
 } from '../constants'
 import Immutable from 'immutable'
 
@@ -20,5 +21,13 @@ export default {
       default:
         return state;
     }
-  }
+  },
+  minimongoCollectionQuery (state = Immutable.Map(), action) {
+    switch(action.type){
+      case SET_COLLECTION_QUERY:
+        return state.set(action.collectionName, action.query);
+      default:
+        return state;
+    }
+  },
 };
