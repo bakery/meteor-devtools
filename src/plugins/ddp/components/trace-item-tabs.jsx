@@ -18,8 +18,12 @@ export default React.createClass({
   },
 
   _renderMessage (data) {
-    let getStyle = (type, expanded) => ({ marginTop: 4 });
-    return <JSONTree data={data} getArrowStyle={getStyle} />;
+    let theme = {
+      tree: {
+        backgroundColor: 'transparent'
+      }
+    };
+    return <JSONTree data={data} theme={theme} />;
   },
 
   _renderTablist () {

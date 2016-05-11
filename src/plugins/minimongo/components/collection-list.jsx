@@ -3,7 +3,9 @@ import CollectionItem from './collection-item';
 
 export default React.createClass({
   propTypes : {
-    collections : PropTypes.array.isRequired
+    collections : PropTypes.array.isRequired,
+    changeCollectionSelection: PropTypes.func.isRequired,
+    currentSelection: PropTypes.string
   },
 
   isSelected (itemName) {
@@ -14,9 +16,13 @@ export default React.createClass({
     const noData = this.props.collections.length === 0 ?
       <li className="no-collections">No collections yet...</li> : null;
     const items = this.props.collections.map((item) => {
-      return <CollectionItem name={item.name} length={item.length}
-      changeCollectionSelection={this.props.changeCollectionSelection} 
-      isSelected={this.isSelected(item.name)}/>
+      return (
+        <CollectionItem 
+          changeCollectionSelection={this.props.changeCollectionSelection}
+          isSelected={this.isSelected(item.name)}
+          key={item.name} length={item.length} name={item.name}
+        />
+      )
     });
 
     return (
