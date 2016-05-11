@@ -2,23 +2,25 @@
   margin: 0.5em;
 }
 
-.minimongo{
+.minimongo {
     display: flex;
     flex-direction: row;
     height: 100%;
 }
 
+.minimongo > aside, .minimongo > section {
+    overflow-y: scroll;
+    padding-bottom: 40px;
+}
+
 .minimongo > aside {
     flex: 1;
     max-width: 25%;
-    overflow: hidden;
     border-right: solid 1px #ccc;
-    overflow-y: scroll;
 }
 
 .minimongo > section {
     flex: 3;
-    overflow: hidden;
 }
 
 .minimongo > section ul {
@@ -43,11 +45,15 @@
     padding: 5px 10px;
 }
 
+.minimongo-collections li:nth-child(even) {
+    background-color: #f5f5f5;
+}
+
 .minimongo-collections li:hover {
     cursor: pointer;
 }
 
-.minimongo-collections .selected {
+.minimongo-collections li.selected {
     color: white;
     background-color: rgb(56, 121, 217)
 }
@@ -57,6 +63,9 @@
     padding: 5px 2px;
     outline: none;
     font-size: 12px;
+    box-sizing: border-box;
+    border: none;
+    border-bottom: 1px solid #ccc;
 }
 
 .minimongo-input.error {

@@ -19,10 +19,10 @@ export default React.createClass({
     );
 
     return (
-      <input 
+      <textarea 
         className={inputClass} 
         onChange={this.handleChange}
-        type="text" 
+        rows={1}
         value={this.props.query}
       />
     )
