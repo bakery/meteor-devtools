@@ -133,7 +133,7 @@ export default connect((state) => {
           'name': value,
           'length': data[value].length
         }
-      });
+      }).sort((a, b) =>  a.name < b.name ? -1 : 1);
     },
     getItemsForCollection: () => {
       const collection = state.minimongoCurrentSelection;
