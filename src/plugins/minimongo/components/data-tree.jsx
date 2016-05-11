@@ -11,10 +11,15 @@ export default React.createClass({
       return;
     }
 
-    let theme = {
+    const theme = {
       tree: {
         backgroundColor: 'transparent'
-      }
+      },
+      arrow: ({ style }, type, expanded) => ({
+        style: Object.assign(style, {
+            marginTop: 2,
+        })
+      }),
     };
     
     let getItemString = (type, data, itemType, itemString) => {

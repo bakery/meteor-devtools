@@ -18,10 +18,15 @@ export default React.createClass({
   },
 
   _renderMessage (data) {
-    let theme = {
+    const theme = {
       tree: {
         backgroundColor: 'transparent'
-      }
+      },
+      arrow: ({ style }, type, expanded) => ({
+        style: Object.assign(style, {
+            marginTop: 2,
+        })
+      }),
     };
     return <JSONTree data={data} theme={theme} />;
   },
