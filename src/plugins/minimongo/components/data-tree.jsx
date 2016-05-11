@@ -24,7 +24,9 @@ export default React.createClass({
     };
     
     let getItemString = (type, data, itemType, itemString) => {
-      return (<span> {data._id} {itemType} {itemString} </span>);
+      let id = (typeof data._id) === 'string' ? data._id : 
+        data._id && data._id._str;
+      return (<span> {id} {itemType} {itemString} </span>);
     };
     
     if(Object.keys(this.props.data).length === 0){
