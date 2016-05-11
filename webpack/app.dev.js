@@ -18,7 +18,7 @@ module.exports = baseConfig({
     path: path.join(__dirname, 'build'),
     publicPath: '/build/'
   },
-  devtool: 'eval-source-map',
+  devtool: '#eval-source-map',
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(),
