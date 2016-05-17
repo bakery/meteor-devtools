@@ -2,8 +2,8 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import Bridge from '../../common/bridge';
 import {
-  setMinimongoCollections, 
-  changeCollectionSelection,
+  setCollectionData, 
+  setCollectionSelection,
   setCollectionQuery
 } from './actions';
 import Immutable from 'immutable';
@@ -20,7 +20,7 @@ let dispatch = null;
 
 const onNewMessage = (error, message) => {
   if(message && message.eventType === 'minimongo-explorer') {
-    dispatch(setMinimongoCollections(message.data));
+    dispatch(setCollectionData(message.data));
   }
 };
 
@@ -91,7 +91,7 @@ class App extends Component {
     const data = this.props.minimongoCollections;
     const noData = Immutable.is(data, Immutable.fromJS({}));
     const changeSelection = (collectionName) => {
-      dispatch(changeCollectionSelection(collectionName));
+      dispatch(setCollectionSelection(collectionName));
     }
 
     return (
@@ -122,11 +122,11 @@ App.propTypes = {
 
 export default connect((state) => {
   return {
-    minimongoCollections: state.minimongoCollections,
-    minimongoCurrentSelection: state.minimongoCurrentSelection,
+    minimongoCollections: state.minimongoCollectionData,
+    minimongoCurrentSelection: state.minimongoCollectionSelection,
     minimongoCollectionQuery: state.minimongoCollectionQuery,
     getCollections: () => {
-      const data = state.minimongoCollections.toJS();
+      const data = state.minimongoCollectionData.toJS();
       const keys = Object.keys(data);
       return keys.map((value) => {
         return {
@@ -136,8 +136,8 @@ export default connect((state) => {
       }).sort((a, b) =>  a.name < b.name ? -1 : 1);
     },
     getItemsForCollection: () => {
-      const collection = state.minimongoCurrentSelection;
-      const data = state.minimongoCollections.toJS();
+      const collection = state.minimongoCollectionSelection;
+      const data = state.minimongoCollectionData.toJS();
       return data[collection] || [];
     },
   };

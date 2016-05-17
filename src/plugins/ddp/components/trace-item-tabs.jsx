@@ -1,6 +1,7 @@
 import React from 'react'
 import JSONTree from 'react-json-tree'
 import ItemPropTypes from './trace-item-prop-types'
+import JSONTreeItem from './json-tree-item'
 import {Tab, Tabs, TabList, TabPanel} from '../../../patch/react-tabs'
 import Bridge from '../../../common/bridge'
 import Warnings from './warnings'
@@ -29,7 +30,21 @@ export default React.createClass({
         })
       }),
     };
-    return <JSONTree data={data} theme={theme} />;
+
+    let valueRenderer = (value, raw, key) => {
+      return (<JSONTreeItem 
+        data={this.props.data.message} 
+        label={key} 
+        raw={raw}
+        value={value} 
+      />);
+    };
+
+    return (<JSONTree
+      data={data}
+      theme={theme} 
+      valueRenderer={valueRenderer}
+    />);
   },
 
   _renderTablist () {

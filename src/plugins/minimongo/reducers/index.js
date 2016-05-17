@@ -1,22 +1,24 @@
 import { 
-  SET_MINIMONGO_COLLECTIONS,
-  CHANGE_COLLECTION_SELECTION,
-  SET_COLLECTION_QUERY
+  SET_MINIMONGO_COLLECTION_DATA,
+  SET_MINIMONGO_COLLECTION_SELECTION,
+  SET_MINIMONGO_COLLECTION_QUERY,
+  SET_MINIMONGO_COLLECTION_AND_QUERY,
 } from '../constants'
 import Immutable from 'immutable'
 
 export default {
-  minimongoCollections (state = Immutable.fromJS({}), action) {
+  minimongoCollectionData (state = Immutable.fromJS({}), action) {
     switch(action.type){
-      case SET_MINIMONGO_COLLECTIONS:
+      case SET_MINIMONGO_COLLECTION_DATA:
         return Immutable.fromJS(action.data);
       default:
         return state;
     }
   },
-  minimongoCurrentSelection (state = Immutable.fromJS(null), action) {
+  minimongoCollectionSelection (state = Immutable.fromJS(null), action) {
     switch(action.type){
-      case CHANGE_COLLECTION_SELECTION:
+      case SET_MINIMONGO_COLLECTION_SELECTION:
+      case SET_MINIMONGO_COLLECTION_AND_QUERY:
         return Immutable.fromJS(action.collectionName);
       default:
         return state;
@@ -24,7 +26,8 @@ export default {
   },
   minimongoCollectionQuery (state = Immutable.Map(), action) {
     switch(action.type){
-      case SET_COLLECTION_QUERY:
+      case SET_MINIMONGO_COLLECTION_QUERY:
+      case SET_MINIMONGO_COLLECTION_AND_QUERY:
         return state.set(action.collectionName, action.query);
       default:
         return state;
