@@ -64,8 +64,7 @@ class App extends Component {
       const projector = safeDocumentProjector(query);
       const sorter = safeDocumentSorter(query);
       const error = matcher.error || projector.error || sorter.error;
-      const collection = this.props.getItemsForCollection();
-      const queryResult = collection
+      const queryResult = this.props.getItemsForCollection()
         .filter(matcher.action)
         .map(projector.action)
         .sort(sorter.action);
@@ -126,12 +125,10 @@ export default connect((state) => {
     minimongoCurrentSelection: state.minimongoCollectionSelection,
     minimongoCollectionQuery: state.minimongoCollectionQuery,
     getCollections: () => {
-      const data = state.minimongoCollectionData.toJS();
-      const keys = Object.keys(data);
-      return keys.map((value) => {
+      return state.minimongoCollectionData.map((value, key) => {
         return {
-          'name': value,
-          'length': data[value].length
+          'name': key,
+          'size': value.count()
         }
       }).sort((a, b) =>  a.name < b.name ? -1 : 1);
     },

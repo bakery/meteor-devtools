@@ -3,7 +3,7 @@ import React, { PropTypes } from 'react';
 export default React.createClass({
   propTypes : {
     name : PropTypes.string.isRequired,
-    length: PropTypes.number.isRequired,
+    size: PropTypes.number.isRequired,
     isSelected: PropTypes.bool.isRequired
   },
 
@@ -15,7 +15,7 @@ export default React.createClass({
     return (
       <li className={(this.props.isSelected ? 'selected' : '')}
       onClick={this.changeSelection}>
-        {this.props.name} ({this.props.length})
+        {this.props.name} ({this.props.size})
       </li>
     )
   }
