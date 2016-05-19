@@ -3,7 +3,10 @@ import TraceItem from './trace-item';
 
 export default React.createClass({
   propTypes : {
-    traces : PropTypes.array.isRequired
+    traces : React.PropTypes.oneOfType([
+      PropTypes.array.isRequired,
+      PropTypes.object.isRequired  
+    ])
   },
 
   render () {
