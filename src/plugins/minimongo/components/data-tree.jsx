@@ -26,6 +26,11 @@ export default React.createClass({
       return (<span> {id} {itemType} {itemString} </span>);
     };
 
+    // expand the first node if its an only child
+    let shouldExpandNode = (keyPath, data, level) => {
+      return level === 1 && this.props.data.length === 1;
+    };
+
     if(this.props.data.length === 0){
       return <div className="no-minimongo">No items in this collection.</div>
     } else {
@@ -34,6 +39,7 @@ export default React.createClass({
         data={this.props.data} 
         getItemString={getItemString} 
         hideRoot
+        shouldExpandNode={shouldExpandNode}
         theme={theme} 
       />);
     }

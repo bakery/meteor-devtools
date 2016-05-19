@@ -13,7 +13,6 @@ export default React.createClass({
   },
 
   render () {
-    console.log(this.props.collections.count() );
     const noData = this.props.collections.count() === 0 ?
       <li className="no-collections">No collections yet...</li> : null;
     const items = this.props.collections.valueSeq().map((item) => {
