@@ -7,6 +7,7 @@ import BlazeReducers from './blaze/reducers';
 import BlazeInspector from './blaze';
 import MiniMongoExplorer from './minimongo';
 import MiniMongoReducers from './minimongo/reducers';
+import CommonReducers from '../common/reducers';
 
 let __store = null;
 const plugins = [
@@ -36,7 +37,7 @@ module.exports = {
       )(createStore);
 
       const configureStore = function(initialState){
-        let rootReducer = {};
+        let rootReducer = CommonReducers;
         _.each(plugins , (p) => _.extend(rootReducer, p.reducers));
         return finalCreateStore(combineReducers(rootReducer), initialState);
       }

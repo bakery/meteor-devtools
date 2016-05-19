@@ -1,14 +1,13 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { 
-  setCollectionSelection,
-  setCollectionAndQuery
-} from '../../minimongo/actions';
+import { setCollectionSelection, setCollectionAndQuery } from '../../minimongo/actions';
+import { setTabIndex } from '../../../common/actions';
+import { MINIMONGO_TAB_INDEX } from '../../../common/constants';
 
 class JSONTreeItem extends Component {
   
   _printValue () {
-    if((this.props.data.msg === 'added' || this.props.data.msg === 'changed' || 'removed') &&
+    if((this.props.data.msg === 'added' || this.props.data.msg === 'changed') &&
       (this.props.label === 'id' || this.props.label === 'collection')) {
       return (
         <span className="collection-link" onClick={this.props.setMinimongoState}>
@@ -41,9 +40,13 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     setMinimongoState: () => {
       if(ownProps.label === 'id'){
         dispatch(setCollectionAndQuery(ownProps.data.collection, query));
+        // switch to minimongo tab
+        dispatch(setTabIndex(MINIMONGO_TAB_INDEX));
       }
       if(ownProps.label === 'collection'){
-        dispatch(setCollectionSelection(ownProps.data.collection)) 
+        dispatch(setCollectionSelection(ownProps.data.collection));
+        // switch to minimongo tab
+        dispatch(setTabIndex(MINIMONGO_TAB_INDEX));
       }
     }
   };

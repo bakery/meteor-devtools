@@ -18,6 +18,7 @@ export default {
   minimongoCollectionSelection (state = Immutable.fromJS(null), action) {
     switch(action.type){
       case SET_MINIMONGO_COLLECTION_SELECTION:
+        return Immutable.fromJS(action.collectionName);
       case SET_MINIMONGO_COLLECTION_AND_QUERY:
         return Immutable.fromJS(action.collectionName);
       default:
@@ -27,6 +28,7 @@ export default {
   minimongoCollectionQuery (state = Immutable.Map(), action) {
     switch(action.type){
       case SET_MINIMONGO_COLLECTION_QUERY:
+        return state.set(action.collectionName, action.query);
       case SET_MINIMONGO_COLLECTION_AND_QUERY:
         return state.set(action.collectionName, action.query);
       default:
