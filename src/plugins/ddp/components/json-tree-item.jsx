@@ -7,11 +7,17 @@ import { MINIMONGO_TAB_INDEX } from '../../../common/constants';
 class JSONTreeItem extends Component {
   
   _printValue () {
-    if((this.props.data.msg === 'added' || this.props.data.msg === 'changed') &&
+    // if data is an array, 
+    // check the first item to get collection name
+    let data = this.props.data;
+    if(Array.isArray(this.props.data) && this.props.data.length){
+      data = this.props.data[0];
+    } 
+    if((data.msg === 'added' || data.msg === 'changed') &&
       (this.props.label === 'id' || this.props.label === 'collection')) {
       return (
-        <span className="collection-link" onClick={this.props.setMinimongoState}>
-          {this.props.value}
+        <span onClick={this.props.setMinimongoState}>
+          "<span className="collection-link">{this.props.raw}</span>"
         </span>);
     } else {
       return (<span>{this.props.value}</span>);
@@ -26,7 +32,10 @@ class JSONTreeItem extends Component {
 JSONTreeItem.propTypes = {
   value: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
-  data: PropTypes.object.isRequired,
+  data: React.PropTypes.oneOfType([
+            React.PropTypes.object,
+            React.PropTypes.array
+        ]).isRequired,
   raw: PropTypes.string.isRequired,
   setMinimongoState: PropTypes.func.isRequired
 };
@@ -38,15 +47,17 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   ].join('');
   return {
     setMinimongoState: () => {
+      // if data is an array, 
+      // check the first item to get collection name
+      let data = ownProps.data;
+      if(Array.isArray(ownProps.data) && ownProps.data.length){
+        data = ownProps.data[0];
+      } 
       if(ownProps.label === 'id'){
-        dispatch(setCollectionAndQuery(ownProps.data.collection, query));
-        // switch to minimongo tab
-        dispatch(setTabIndex(MINIMONGO_TAB_INDEX));
+        dispatch(setCollectionAndQuery(data.collection, query));
       }
       if(ownProps.label === 'collection'){
-        dispatch(setCollectionSelection(ownProps.data.collection));
-        // switch to minimongo tab
-        dispatch(setTabIndex(MINIMONGO_TAB_INDEX));
+        dispatch(setCollectionSelection(data.collection));
       }
     }
   };

@@ -49,19 +49,19 @@ export default React.createClass({
 
   _renderTablist () {
     let l = [
-      <Tab>Message</Tab>, 
+      <Tab key={0}>Message</Tab>, 
     ];
 
     if(this.props.data.request){
-      l.push(<Tab>{this._getRequestTabLabel()}</Tab>);
+      l.push(<Tab key={1}>{this._getRequestTabLabel()}</Tab>);
     }
 
     if(this.props.data.stackTrace){
-      l.push(<Tab>Stack Trace</Tab>); 
+      l.push(<Tab key={2}>Stack Trace</Tab>); 
     }
 
     if(this.props.data.warnings){
-      l.push(<Tab>⚠️ Warnings</Tab>);
+      l.push(<Tab key={3}>⚠️ Warnings</Tab>);
     }
 
     return l;
@@ -69,19 +69,19 @@ export default React.createClass({
 
   _renderTabPanels () {
     let tb = [
-      <TabPanel>
+      <TabPanel key={0}>
         {this._renderMessage(this.props.data.message)}
       </TabPanel>
     ];
 
     if(this.props.data.request){
-      tb.push(<TabPanel>
+      tb.push(<TabPanel key={1}>
         {this._renderMessage(this.props.data.request.message)}
       </TabPanel>);
     }
 
     if(this.props.data.stackTrace){
-      const stackTrace = this.props.data.stackTrace.map(function(st){
+      const stackTrace = this.props.data.stackTrace.map(function(st, i){
 
         let shortUrl = st.fileName || '<anonymous>';
         let functionName = st.functionName ?
@@ -100,7 +100,7 @@ export default React.createClass({
         shortUrl = st.lineNumber ? `${shortUrl}:${st.lineNumber}` : shortUrl;
 
         return (
-          <tr>
+          <tr key={i}>
             <td>{functionName}</td>
             <td>
               @ <a href="#"
@@ -116,9 +116,11 @@ export default React.createClass({
       });
 
       tb.push(
-        <TabPanel>
+        <TabPanel key={2}>
           <table className="stack-trace">
+            <tbody>
             {stackTrace}
+            </tbody>
           </table>
         </TabPanel>
       );
@@ -126,7 +128,7 @@ export default React.createClass({
 
     if(this.props.data.warnings){
       tb.push(
-        <TabPanel>
+        <TabPanel key={3}>
           <Warnings warnings={this.props.data.warnings} />
         </TabPanel>
       ); 

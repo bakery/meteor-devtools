@@ -8,7 +8,7 @@ export default {
         stackTrace : React.PropTypes.array,
         message : React.PropTypes.oneOfType([
             React.PropTypes.object,
-            React.PropTypes.arrat
+            React.PropTypes.array
         ]).isRequired,
         label : React.PropTypes.string,
         operation : React.PropTypes.string,

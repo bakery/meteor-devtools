@@ -29,6 +29,7 @@ class App extends Component {
   }
 
   render() {
+    const { dispatch, tabIndex } = this.props;
     const plugins = getPlugins();
     const tabs = _.map(plugins, (p) => {
       const keyName = `tab-${slugify(p.name)}`;
@@ -39,6 +40,10 @@ class App extends Component {
       return <TabPanel className="app-tab-panel" key={keyName}>{p.component}</TabPanel>;
     });
 
+    const _handleSelect = (index, last) => {
+      dispatch(setTabIndex(index));
+    };
+
     const notificaitonStyle = {
       NotificationItem: {
         DefaultStyle: {
@@ -48,7 +53,7 @@ class App extends Component {
     };
     return (
       <div className="tab-wrapper">
-        <Tabs className="app-tabs" selectedIndex={this.props.tabIndex}>
+        <Tabs className="app-tabs" onSelect={_handleSelect} selectedIndex={this.props.tabIndex}>
           <TabList>
             {tabs}
             <li className="gh-link">
