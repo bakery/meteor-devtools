@@ -1,9 +1,18 @@
+const __cleanUpObjectProps = (obj) => {
+  Object.keys(obj).forEach((k) => {
+    if (obj[k] instanceof Date) {
+      obj[k] = obj[k].toString();
+    }
+  });
+  return obj;
+};
+
 const __getMinimongoCollections = (callback) => {
   let data = {};
   const collections = Meteor.connection._mongo_livedata_collections;
   for(let i in collections) {
     if(collections[i].name){
-      data[collections[i].name] = collections[i].find().fetch();
+      data[collections[i].name] = collections[i].find().fetch().map(__cleanUpObjectProps);
     } 
   }
   callback && callback('minimongo-explorer', data);
