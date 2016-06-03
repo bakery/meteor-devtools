@@ -41,10 +41,7 @@ JSONTreeItem.propTypes = {
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
-  const query = ['{ query : {',
-    '"_id":"', ownProps.raw,
-    '"}, fields: {}, sort: {} }'
-  ].join('');
+  const query = `{ query : {"_id":"${ownProps.raw}"}, fields: {}, sort: {} }`;
   return {
     setMinimongoState: () => {
       // if data is an array, 
