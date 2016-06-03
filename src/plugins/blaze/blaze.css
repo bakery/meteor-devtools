@@ -55,7 +55,7 @@
 
 .blaze-inspector > aside .section-separator {
   background-color: #ddd;
-  padding: 0 5px;
+  padding: 2px 5px;
   border-top: 1px solid #ccc;
   border-bottom: 1px solid #ccc;
   color: rgb(50, 50, 50);

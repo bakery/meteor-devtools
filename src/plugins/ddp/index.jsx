@@ -60,7 +60,9 @@ class App extends Component {
       Bridge.registerPageReloadCallback(onPageReload);
     } else {
       // inside standalone web app
-      setInterval(function(){
+      var counter = 0;
+      var loop = setInterval(function(){
+        counter++;
         onNewMessage.call(this, null, {
           eventType: 'ddp-trace',
           data: {
@@ -68,6 +70,9 @@ class App extends Component {
             messageJSON: JSON.stringify(DDPMessageGenerator.generate())
           }
         });
+        if(counter > 100) {
+          clearInterval(loop);
+        }
       },1000);
     }
 

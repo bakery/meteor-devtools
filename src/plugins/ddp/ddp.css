@@ -159,3 +159,11 @@ ul.warnings-list > li {
   opacity: 0;
   white-space: nowrap;
 }
+
+.collection-link {
+  text-decoration: underline;
+}
+
+.collection-link:hover {
+  cursor: pointer;
+}

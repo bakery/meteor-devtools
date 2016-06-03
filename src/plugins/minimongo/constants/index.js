@@ -1,3 +1,4 @@
-export const SET_MINIMONGO_COLLECTIONS = 'set_minimongo_collections';
-export const CHANGE_COLLECTION_SELECTION = 'change_collection_selection';
-export const SET_COLLECTION_QUERY = 'set_collection_query';
+export const SET_MINIMONGO_COLLECTION_DATA = 'set_minimongo_collection_data';
+export const SET_MINIMONGO_COLLECTION_SELECTION = 'set_minimongo_collection_selection';
+export const SET_MINIMONGO_COLLECTION_QUERY = 'set_minimongo_collection_query';
+export const SET_MINIMONGO_COLLECTION_AND_QUERY = 'set_minimongo_collection_and_query';

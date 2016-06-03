@@ -2,7 +2,7 @@ import 'babel-polyfill'
 import { getStore, getPlugins } from './plugins'
 import { render } from 'react-dom'
 import { Provider, connect } from 'react-redux'
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import NotificationSystem from 'react-notification-system'
 import {Tab, Tabs, TabList, TabPanel} from './patch/react-tabs'
 import _ from 'underscore';
@@ -10,6 +10,7 @@ import Analytics from './common/analytics';
 import slugify from 'slugify';
 import Bridge from './common/bridge';
 import './common/styles/app.css';
+import { setTabIndex } from './common/actions';
 
 class App extends Component {
   showGlobalError(msg) {
@@ -28,6 +29,7 @@ class App extends Component {
   }
 
   render() {
+    const { dispatch, tabIndex } = this.props;
     const plugins = getPlugins();
     const tabs = _.map(plugins, (p) => {
       const keyName = `tab-${slugify(p.name)}`;
@@ -38,6 +40,10 @@ class App extends Component {
       return <TabPanel className="app-tab-panel" key={keyName}>{p.component}</TabPanel>;
     });
 
+    const _handleSelect = (index, last) => {
+      dispatch(setTabIndex(index));
+    };
+
     const notificaitonStyle = {
       NotificationItem: {
         DefaultStyle: {
@@ -47,7 +53,7 @@ class App extends Component {
     };
     return (
       <div className="tab-wrapper">
-        <Tabs className="app-tabs">
+        <Tabs className="app-tabs" onSelect={_handleSelect} selectedIndex={this.props.tabIndex}>
           <TabList>
             {tabs}
             <li className="gh-link">
@@ -64,9 +70,17 @@ class App extends Component {
   }
 }
 
+App.propTypes = {
+  tabIndex : PropTypes.number,
+};
+
 ((rootElement, AppContainer, store) => {
   Bridge.setup()
   Analytics.setup()
   rootElement.innerHTML = ''
   render(<Provider store={store}><AppContainer /></Provider>, rootElement)
-})(document.querySelector('.app-container'), connect()(App), getStore())
+})(document.querySelector('.app-container'), connect((state) => {
+  return {
+    tabIndex: state.tabIndex
+  }
+})(App), getStore())

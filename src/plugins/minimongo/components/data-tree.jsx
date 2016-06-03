@@ -3,13 +3,10 @@ import JSONTree from 'react-json-tree';
 
 export default React.createClass({
   propTypes : {
-    data : PropTypes.array
+    data : PropTypes.array.isRequired
   },
 
   render () {
-    if(typeof(this.props.data) !== 'object'){
-      return;
-    }
 
     const theme = {
       tree: {
@@ -28,8 +25,13 @@ export default React.createClass({
         data._id && data._id._str;
       return (<span> {id} {itemType} {itemString} </span>);
     };
-    
-    if(Object.keys(this.props.data).length === 0){
+
+    // expand the first node if its an only child
+    let shouldExpandNode = (keyPath, data, level) => {
+      return level === 1 && this.props.data.length === 1;
+    };
+
+    if(this.props.data.length === 0){
       return <div className="no-minimongo">No items in this collection.</div>
     } else {
       return (
@@ -37,6 +39,7 @@ export default React.createClass({
         data={this.props.data} 
         getItemString={getItemString} 
         hideRoot
+        shouldExpandNode={shouldExpandNode}
         theme={theme} 
       />);
     }
