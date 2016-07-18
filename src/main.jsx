@@ -9,7 +9,7 @@ import _ from 'underscore';
 import Analytics from './common/analytics';
 import slugify from 'slugify';
 import Bridge from './common/bridge';
-import './common/styles/app.css';
+import './common/styles/app.scss';
 import { setTabIndex } from './common/actions';
 
 class App extends Component {
@@ -26,6 +26,7 @@ class App extends Component {
     window.onerror = (message) => {
       this.showGlobalError(message);
     };
+    Analytics.trackPageView('loaded devtools');
   }
 
   render() {
@@ -53,7 +54,11 @@ class App extends Component {
     };
     return (
       <div className="tab-wrapper">
-        <Tabs className="app-tabs" onSelect={_handleSelect} selectedIndex={this.props.tabIndex}>
+        <Tabs className="app-tabs" 
+          forceRenderTabPanel
+          onSelect={_handleSelect} 
+          selectedIndex={this.props.tabIndex}
+        >
           <TabList>
             {tabs}
             <li className="gh-link">

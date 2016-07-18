@@ -6,6 +6,8 @@ import DDPMonitor from './ddp';
 import BlazeReducers from './blaze/reducers';
 import BlazeInspector from './blaze';
 import MiniMongoExplorer from './minimongo';
+import SecurityAuditor from './security';
+import SecurityReducers from './security/reducers';
 import MiniMongoReducers from './minimongo/reducers';
 import CommonReducers from '../common/reducers';
 
@@ -25,6 +27,11 @@ const plugins = [
     name: 'MiniMongo Explorer',
     reducers: MiniMongoReducers,
     component: <MiniMongoExplorer />
+  },
+  {
+    name: 'Security Auditor',
+    reducers: SecurityReducers,
+    component: <SecurityAuditor />
   }
 ];
 
