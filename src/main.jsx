@@ -66,7 +66,7 @@ class App extends Component {
                 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="88.008px" height="129.007px" viewBox="0 0 88.008 129.007" enable-background="new 0 0 88.008 129.007" className="icon-baker-logo">
                   <g>
                     <g>
-                      <path id="baker-logo" d="M44.033,103.265c-10.209,0-20.505-1.524-25.741-4.478c0.601,6.054,0.921,11.592,0.921,16.364
+                      <path fill="#00e" id="baker-logo" d="M44.033,103.265c-10.209,0-20.505-1.524-25.741-4.478c0.601,6.054,0.921,11.592,0.921,16.364
                         c0,4.403,0.892,7.038,2.343,8.414c1.715,3.084,11.044,5.441,22.298,5.441c0.051,0,0.1-0.002,0.15-0.002s0.1,0.002,0.15,0.002
                         c11.255,0,20.585-2.357,22.298-5.441c1.451-1.377,2.342-4.012,2.342-8.414c0-4.765,0.32-10.294,0.919-16.337
                         c-1.445,0.805-3.312,1.526-5.589,2.153C58.738,102.448,51.603,103.265,44.033,103.265z M62.394,5.839
@@ -77,7 +77,7 @@ class App extends Component {
                     </g>
                   </g>
                 </svg>
-                &nbsp;&nbsp;&nbsp;The Bakery
+                The Bakery
               </a>
               &nbsp;|&nbsp;
               <a href="https://github.com/thebakeryio/meteor-devtools" target="_blank">
