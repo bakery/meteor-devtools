@@ -3,14 +3,10 @@ import _ from 'underscore';
 module.exports = {
 
   buildDDPMessage(collection, operation){
-
-    let params;
-
     // use empty object for inserts to avoid inserting
+    let params = [{}];
     // but _id must be defined for updates and removals  
-    if(operation === 'insert'){
-      params = [{}]; 
-    } else {
+    if(operation !== 'insert'){
       params = [{
         '_id' : 'an_invalid_id'
       }];
@@ -25,39 +21,21 @@ module.exports = {
     return ddpMessage;
   },
 
-  testCollectionSecurity(collection, operation, traces){
-    const ddpResponse = _.first(_.filter(traces, function(obj) {
-      return obj && obj.message && (obj.message.id === `/audit/${collection}/${operation}`)
-        && (obj.message.msg === 'result');
-    }));
-
-    if(!ddpResponse) {
-      return;
+  buildDDPMethodTester(method, paramType){
+    let params = ['String'];
+    if(paramType === 'number'){
+      params = [3.14159];
     }
-    
-    const result = ddpResponse.result !== undefined;
-    const responseCode = ddpResponse.message && ddpResponse.message.error &&
-      ddpResponse.message.error.error;
-
-    if (!result && responseCode === 403) {
-      return 'secure';
-    } else {
-      return 'insecure';
+    if(paramType === 'object'){
+      params = [{}];      
     }
-  },
 
-  exponentialBackoff(toTry, max, delay, callback) {
-    const res = toTry();
-    if (res) {
-      callback(res);
-    } else {
-      if (max > 0) {
-        setTimeout(() => {
-          exponentialBackoff(toTry, max-1, delay * 2, callback);
-        }, delay);
-      } else {
-        console.log('timeout');   
-      }
-    }
+    const ddpMessage = {
+      msg: 'method',
+      method: method,
+      params: params,
+      id: `/audit/${method}/${paramType}`
+    };
+    return ddpMessage;
   }
 };

@@ -6,11 +6,12 @@ import {
   setPackageList,
   setCollectionSecurity,
   setSecurityTab,
-  clearCollectionSecurity
+  clearMethodSecurity
 } from './actions';
 import SplitPane from 'react-split-pane';
 import CollectionPanel from './components/collections-panel';
 import PackageAudit from './components/package-audit';
+import MethodsPanel from './components/methods-panel';
 import Analytics from '../../common/analytics';
 import './security.scss';
 
@@ -24,7 +25,8 @@ const onNewMessage = (error, message) => {
 };
 
 const onPageReload = () => {
-  dispatch(clearCollectionSecurity());
+  dispatch(clearMethodSecurity());
+  dispatch(setPackageList());  
   Bridge.sendMessageToThePage({
     source: 'security-auditor',
     event: 'get-package-list'
@@ -85,13 +87,17 @@ class App extends Component {
     const { dispatch } = this.props;
     const Tabs = [
       {
-        name: 'Collections',
-        component: <CollectionPanel collectionData={this.props.collectionData} />
-      },
-      {
         name: 'Packages',
         component: <PackageAudit packages={this.props.packageList} />
-      }
+      },
+      {
+        name: 'Collections',
+        component: <CollectionPanel collectionData={this.props.collectionData} traces={this.props.resultTraces} />
+      },
+      {
+        name: 'Methods',
+        component: <MethodsPanel methodsSecurity={this.props.methodsSecurity} traces={this.props.resultTraces} />
+      },
     ];
 
     return (
@@ -115,26 +121,19 @@ class App extends Component {
 }
 
 App.propTypes = {
-  collectionData: PropTypes.func,
-  collectionSecurity: PropTypes.object,
+  collectionData: PropTypes.object,
   packageList : PropTypes.object,
-  traces: PropTypes.array,
   securityTabsIndex: PropTypes.number,
+  methodsSecurity: PropTypes.object,
+  resultTraces: PropTypes.object.isRequired
 }
 
 export default connect((state) => {
   return {
     packageList: state.packageList,
-    collectionData : () => {
-      return state.minimongoCollectionData.map((value, key) => {
-        return {
-          'name': key,
-          'size': value.count()
-        }
-      }).sort((a, b) =>  a.name < b.name ? -1 : 1);
-    },
-    collectionSecurity: state.collectionSecurity,
-    traces: state.traces,
-    securityTabsIndex: state.securityTabsIndex
+    collectionData : state.minimongoCollectionData,
+    securityTabsIndex: state.securityTabsIndex,
+    methodsSecurity: state.methodsSecurity,
+    resultTraces: state.resultTraces,
   }
 })(App)

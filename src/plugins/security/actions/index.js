@@ -1,7 +1,7 @@
 import { 
   SET_PACKAGE_LIST, 
   SET_COLLECTION_SECURITY,
-  CLEAR_COLLECTION_SECURITY,
+  CLEAR_METHOD_SECURITY,
   SET_SECURITY_TAB
 } from '../constants';
 
@@ -12,17 +12,9 @@ export function setPackageList(data) {
   }
 }
 
-export function setCollectionSecurity(method, isSecure) {
+export function clearMethodSecurity() {
   return {
-    type: SET_COLLECTION_SECURITY,
-    method: method,
-    isSecure: isSecure 
-  }
-}
-
-export function clearCollectionSecurity() {
-  return {
-    type: CLEAR_COLLECTION_SECURITY
+    type: CLEAR_METHOD_SECURITY
   }
 }
 
